@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SIOP</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="homeTitle">Orçamento Federal</string>
+    <string name="explanation">Escolha um Exercício e consulte os valores do Orçamento Federal</string>
+    <string name="buttonText">Consultar</string>
+    <string name="title_activity_values">ValuesActivity</string>
+    
+    <string name="valuesTitle">Orçamento Federal - </string>
+    <string name="ploa">Valor Projeto Lei</string>
+    <string name="loa">Valor Dotação Inicial</string>
+    <string name="leiMaisCredito">Valor Lei Mais Crédito</string>
+    <string name="empenhado">Valor Empenhado</string>
+    <string name="liquidado">Valor Liquidado</string>
+    <string name="pago">Valor Pago</string>
+    <string name="buttonBack">Voltar</string>
+
+</resources>
