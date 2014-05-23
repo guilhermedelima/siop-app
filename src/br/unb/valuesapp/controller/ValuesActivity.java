@@ -10,9 +10,9 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import br.unb.valuesapp.R;
+import br.unb.valuesapp.util.Validator;
 
 public class ValuesActivity extends Activity {
 
@@ -20,12 +20,12 @@ public class ValuesActivity extends Activity {
 	private Integer selectedYear;
 	
 	private TextView titleEditText;
-	private EditText ploaEditText;
-	private EditText loaEditText;
-	private EditText leiMaisCreditoEditText;
-	private EditText empenhadoEditText;
-	private EditText liquidadoEditText;
-	private EditText pagoEditText;
+	private TextView ploaTextView;
+	private TextView loaTextView;
+	private TextView leiMaisCreditoTextView;
+	private TextView empenhadoTextView;
+	private TextView liquidadoTextView;
+	private TextView pagoTextView;
 	
 	
 	@Override
@@ -42,20 +42,20 @@ public class ValuesActivity extends Activity {
 		selectedYear = bundle.getInt(HomeActivity.SELECTED_YEAR);
 		
 		titleEditText = (TextView) findViewById(R.id.textViewValuesTitle);
-		ploaEditText = (EditText) findViewById(R.id.editTextPloa);
-		loaEditText = (EditText) findViewById(R.id.editTextLoa);
-		leiMaisCreditoEditText = (EditText) findViewById(R.id.editTextLeiMaisCredito);
-		empenhadoEditText = (EditText) findViewById(R.id.editTextEmpenhado);
-		liquidadoEditText = (EditText) findViewById(R.id.editTextLiquidado);
-		pagoEditText = (EditText) findViewById(R.id.editTextPago);
+		ploaTextView = (TextView) findViewById(R.id.editTextPloa);
+		loaTextView = (TextView) findViewById(R.id.editTextLoa);
+		leiMaisCreditoTextView = (TextView) findViewById(R.id.editTextLeiMaisCredito);
+		empenhadoTextView = (TextView) findViewById(R.id.editTextEmpenhado);
+		liquidadoTextView = (TextView) findViewById(R.id.editTextLiquidado);
+		pagoTextView = (TextView) findViewById(R.id.editTextPago);
 		
 		titleEditText.append(selectedYear.toString());
-		ploaEditText.setText(values.get(0).toString());
-		loaEditText.setText(values.get(1).toString());
-		leiMaisCreditoEditText.setText(values.get(2).toString());
-		empenhadoEditText.setText(values.get(3).toString());
-		liquidadoEditText.setText(values.get(4).toString());
-		pagoEditText.setText(values.get(5).toString());
+		ploaTextView.setText( Validator.convertDouble(values.get(0)) );
+		loaTextView.setText(Validator.convertDouble(values.get(1)));
+		leiMaisCreditoTextView.setText(Validator.convertDouble(values.get(2)));
+		empenhadoTextView.setText(Validator.convertDouble(values.get(3)));
+		liquidadoTextView.setText(Validator.convertDouble(values.get(4)));
+		pagoTextView.setText(Validator.convertDouble(values.get(5)));
 	}
 
 

@@ -1,18 +1,13 @@
 package br.unb.valuesapp.data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.unb.valuesapp.service.EndpointSPARQL;
-
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.RDFNode;
+import br.unb.valuesapp.util.json.JsonParser;
+import br.unb.valuesapp.util.json.JsonValuesParser;
 
 public class ValuesDAO {
 	
-
 	private static final String PLOA_SPARQL = "ploa";
 	private static final String LOA_SPARQL = "loa";
 	private static final String LEI_MAIS_CREDITO_SPARQL = "lei_mais_credito";
@@ -26,16 +21,17 @@ public class ValuesDAO {
 	
 	public List<Double> getValues(int year){
 		
-		ResultSet result;
-		String query;
+		String query, response;
 		EndpointSPARQL endpoint;
+		JsonParser<Double> parser;
 		
 		query = buildQuery(year);
 		endpoint = new EndpointSPARQL();
+		parser = new JsonValuesParser();
 		
-		result = endpoint.execSPARQLQuery(query);
+		response = endpoint.execSPARQLQuery(query);
 		
-		return result!=null ? convertResultQuery(result) : null;
+		return response!=null ? parser.convertJsonToList(response) : null;
 	}
 	
 	private String buildQuery(int year){
@@ -52,49 +48,8 @@ public class ValuesDAO {
                 "  ?i loa:valorLiquidado ?val5 ." +
                 "  ?i loa:valorPago ?val6 ." +
                 "}";
-
-		System.out.println(query);
 		
 		return query;
-	}
-	
-	private List<Double> convertResultQuery(ResultSet result){
-		
-		List<Double> values;
-		
-		values = new ArrayList<Double>();
-		
-		while(result.hasNext()){
-			
-			QuerySolution qsol;
-			RDFNode ploaNode, loaNode, leiMaisCreditoNode, empenhadoNode, liquidadoNode, pagoNode;
-			double ploa, loa, leiMaisCredito, empenhado, liquidado, pago;
-			
-			qsol = result.next();
-			
-			ploaNode = qsol.get(PLOA_SPARQL);
-			loaNode = qsol.get(LOA_SPARQL);
-			leiMaisCreditoNode = qsol.get(LEI_MAIS_CREDITO_SPARQL);
-			empenhadoNode = qsol.get(EMPENHADO_SPARQL);
-			liquidadoNode = qsol.get(LIQUIDADO_SPARQL);
-			pagoNode = qsol.get(PAGO_SPARQL);
-
-			ploa = Double.parseDouble(((Literal)ploaNode).getLexicalForm());
-			loa = Double.parseDouble(((Literal)loaNode).getLexicalForm());
-			leiMaisCredito = Double.parseDouble(((Literal)leiMaisCreditoNode).getLexicalForm());
-			empenhado = Double.parseDouble(((Literal)empenhadoNode).getLexicalForm());
-			liquidado = Double.parseDouble(((Literal)liquidadoNode).getLexicalForm());
-			pago = Double.parseDouble(((Literal)pagoNode).getLexicalForm());
-			
-			values.add(ploa);
-			values.add(loa);
-			values.add(leiMaisCredito);
-			values.add(empenhado);
-			values.add(liquidado);
-			values.add(pago);
-		}
-		
-		return values;
 	}
 
 }

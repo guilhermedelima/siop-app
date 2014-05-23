@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,7 +28,8 @@ public class HomeActivity extends Activity {
 	
 	private static final String ERROR_TITLE = "Erro!";
 	private static final String ERROR_INVALID_YEAR = "Exercício Inválido";
-	private static final String ERROR_SERVICE = "Erro ao se conectar com servidor";
+	private static final String ERROR_INTERNET_ACCESS = "Acesso a rede indisponível";
+	private static final String ERROR_SERVICE= "Erro ao se conectar com servidor";
 	private static final String PROGRESS_MESSAGE = "Carregando...";
 	
 	@Override
@@ -46,17 +49,21 @@ public class HomeActivity extends Activity {
 	
 	public void query(View v){
 		
-		int year;
+		Integer year;
+		ConnectivityManager manager;
+		NetworkInfo info;
 		
 		year = Validator.convertYear( yearEditText.getText().toString() );
+		manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+		info = manager.getActiveNetworkInfo();
 		
-		if( year == 0){
+		if( year == null || info==null || !info.isConnectedOrConnecting()){
 			AlertDialog alert;
 			AlertDialog.Builder builder;
 			
 			builder = new AlertDialog.Builder(this);
 			builder.setTitle(ERROR_TITLE);
-			builder.setMessage(ERROR_INVALID_YEAR);
+			builder.setMessage(year==null ? ERROR_INVALID_YEAR : ERROR_INTERNET_ACCESS);
 			builder.setPositiveButton("OK", null);
 			
 			alert = builder.create();
@@ -108,6 +115,8 @@ public class HomeActivity extends Activity {
 		@Override
 		protected void onPostExecute(Boolean isOk) {
 
+			dialog.cancel();
+			
 			if( isOk ){
 				Intent valuesIntent;
 				
@@ -117,8 +126,6 @@ public class HomeActivity extends Activity {
 				
 				startActivity(valuesIntent);
 			}else{
-				
-				dialog.cancel();
 				
 				AlertDialog alert;
 				AlertDialog.Builder builder;
