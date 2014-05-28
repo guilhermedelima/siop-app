@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".QueryActivity" >
+
+    <TextView
+        android:id="@+id/textViewHomeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/homeTitle"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textViewExplanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewHomeTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/explanation" />
+
+    <TextView
+        android:id="@+id/textViewExercicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewExplanation"
+        android:layout_below="@+id/textViewExplanation"
+        android:layout_marginTop="60dp"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/exericioLabel" />
+
+    <Spinner
+        android:id="@+id/spinnerExercicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewExercicio"
+        android:layout_below="@+id/textViewExercicio"
+        android:layout_marginTop="15dp"
+        android:entries="@array/exercicios" />
+
+    <TextView
+        android:id="@+id/textViewUnidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerExercicio"
+        android:layout_alignLeft="@+id/textViewExercicio"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/unidadeLabel" />
+
+    <EditText
+        android:id="@+id/editTextUnidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewExercicio"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/textViewUnidade"
+        android:ems="4"
+        android:inputType="number"
+        android:hint="@string/unidadeHint"/>
+
+    <TextView
+        android:id="@+id/textViewPt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextUnidade"
+        android:layout_alignLeft="@+id/textViewExercicio"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:text="@string/ptLabel" />
+
+    <EditText
+        android:id="@+id/editTextPt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewExercicio"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/textViewPt"
+        android:hint="@string/ptHint"
+        android:ems="9" />
+    
+    <Button
+        android:id="@+id/buttonQuery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:height="10dp"
+        android:layout_below="@+id/editTextPt"
+        android:onClick="query"
+        android:text="@string/buttonText" />
+
+
+</RelativeLayout>

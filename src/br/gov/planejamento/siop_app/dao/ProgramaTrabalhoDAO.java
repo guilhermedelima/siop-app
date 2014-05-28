@@ -1,12 +1,12 @@
-package br.unb.valuesapp.data;
+package br.gov.planejamento.siop_app.dao;
 
 import java.util.List;
 
-import br.unb.valuesapp.service.EndpointSPARQL;
-import br.unb.valuesapp.util.json.JsonParser;
-import br.unb.valuesapp.util.json.JsonValuesParser;
+import br.gov.planejamento.siop_app.service.EndpointSPARQL;
+import br.gov.planejamento.siop_app.util.json.JsonParser;
+import br.gov.planejamento.siop_app.util.json.JsonValuesParser;
 
-public class ValuesDAO {
+public class ProgramaTrabalhoDAO {
 	
 	private static final String PLOA_SPARQL = "ploa";
 	private static final String LOA_SPARQL = "loa";
@@ -15,7 +15,7 @@ public class ValuesDAO {
 	private static final String LIQUIDADO_SPARQL = "liquidado";
 	private static final String PAGO_SPARQL = "pago";
 	
-	public ValuesDAO(){
+	public ProgramaTrabalhoDAO(){
 		
 	}
 	

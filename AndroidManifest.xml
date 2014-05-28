@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="br.unb.valuesapp.controller.HomeActivity"
+            android:name="br.gov.planejamento.siop_app.controller.QueryActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,9 +26,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.unb.valuesapp.controller.ValuesActivity"
+            android:name="br.gov.planejamento.siop_app.controller.ValuesActivity"
             android:label="@string/title_activity_values"
-            android:parentActivityName="br.unb.valuesapp.controller.HomeActivity" >
+            android:parentActivityName="br.gov.planejamento.siop_app.controller.QueryActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.unb.valuesapp.controller.HomeActivity" />

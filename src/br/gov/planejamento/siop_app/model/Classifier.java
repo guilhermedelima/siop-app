@@ -1,4 +1,4 @@
-package br.unb.valuesapp.model;
+package br.gov.planejamento.siop_app.model;
 
 public class Classifier{
 

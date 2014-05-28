@@ -1,4 +1,4 @@
-package br.unb.valuesapp.util.json;
+package br.gov.planejamento.siop_app.util.json;
 
 import java.util.ArrayList;
 import java.util.List;

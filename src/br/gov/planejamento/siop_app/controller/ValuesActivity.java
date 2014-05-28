@@ -1,4 +1,4 @@
-package br.unb.valuesapp.controller;
+package br.gov.planejamento.siop_app.controller;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import br.gov.planejamento.siop_app.util.Validator;
 import br.unb.valuesapp.R;
-import br.unb.valuesapp.util.Validator;
 
 public class ValuesActivity extends Activity {
 
@@ -38,8 +38,8 @@ public class ValuesActivity extends Activity {
 		
 		bundle = getIntent().getExtras();
 		
-		values = (List<Double>) bundle.getSerializable(HomeActivity.VALUES_ARRAY);
-		selectedYear = bundle.getInt(HomeActivity.SELECTED_YEAR);
+//		values = (List<Double>) bundle.getSerializable(QueryActivity.VALUES_ARRAY);
+//		selectedYear = bundle.getInt(QueryActivity.SELECTED_YEAR);
 		
 		titleEditText = (TextView) findViewById(R.id.textViewValuesTitle);
 		ploaTextView = (TextView) findViewById(R.id.editTextPloa);

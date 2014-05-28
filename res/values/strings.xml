@@ -2,11 +2,10 @@
 <resources>
 
     <string name="app_name">SIOP</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Configurações</string>
     
-    <string name="homeTitle">Orçamento Federal</string>
-    <string name="explanation">Escolha um Exercício e consulte os valores do Orçamento Federal</string>
+    <string name="homeTitle">SIOP - Sistema Integrado de Orçamento e Planejamento</string>
+    <string name="explanation">Escolha o Exerício financeiro e os códigos da Unidade orçamentária e Programa de trabalho para consultar</string>
     <string name="buttonText">Consultar</string>
     <string name="title_activity_values">ValuesActivity</string>
     
@@ -18,5 +17,20 @@
     <string name="liquidado">Valor Liquidado</string>
     <string name="pago">Valor Pago</string>
     <string name="buttonBack">Voltar</string>
+    
+    <string name="exericioLabel">Exercício</string>
+    <string name="unidadeLabel">Unidade orçamentária</string>
+    <string name="unidadeHint">00000</string>
+    <string name="ptLabel">Programa de trabalho</string>
+    <string name="ptHint">00.000.0000.XXXX</string>
+    
+    <string name="titleError">Erro!</string>
+    <string name="internetAcessError">Verifique sua conexão com a internet!</string>
+    
+    <string name="invalidExercicioError">Exercício inválido.</string>
+    <string name="invalidPtError">Cód. do Programa de trabalho inválido.</string>
+    <string name="invalidUnidadeError">Cód. da Unidade orçamentária inváido.</string>
+    
+    <string name="loading">Carregando...</string>
 
 </resources>
