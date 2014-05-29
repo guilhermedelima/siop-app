@@ -2,54 +2,76 @@ package br.gov.planejamento.siop_app.dao;
 
 import java.util.List;
 
+import android.util.Log;
+import br.gov.planejamento.siop_app.model.ClassifierType;
+import br.gov.planejamento.siop_app.model.Item;
 import br.gov.planejamento.siop_app.service.EndpointSPARQL;
 import br.gov.planejamento.siop_app.util.json.JsonParser;
 import br.gov.planejamento.siop_app.util.json.JsonValuesParser;
 
 public class ProgramaTrabalhoDAO {
 	
-	private static final String PLOA_SPARQL = "ploa";
-	private static final String LOA_SPARQL = "loa";
-	private static final String LEI_MAIS_CREDITO_SPARQL = "lei_mais_credito";
-	private static final String EMPENHADO_SPARQL = "empenhado";
-	private static final String LIQUIDADO_SPARQL = "liquidado";
-	private static final String PAGO_SPARQL = "pago";
-	
 	public ProgramaTrabalhoDAO(){
 		
 	}
 	
-	public List<Double> getValues(int year){
+	private String buildQuery(int exercicio, String unidade, String pt){
+		String codFuncao, codSubfuncao, codUnidade, codPrograma, codAcao;
 		
+		String[] ptSplit = pt.split("\\.");
+		
+		codFuncao = ptSplit[0];
+		codSubfuncao = ptSplit[1];
+		codUnidade = unidade;
+		codPrograma = ptSplit[2];
+		codAcao = ptSplit[3];
+		
+		String query = "SELECT "+
+				"?"+ClassifierType.FUNCAO.getId()+" "+
+				"?"+ClassifierType.SUBFUNCAO.getId()+" "+
+				"?"+ClassifierType.UO.getId()+" "+
+				"?"+ClassifierType.PROGRAMA.getId()+""+
+				"?"+ClassifierType.ACAO.getId()+""+
+				"(SUM(?ploa) AS ?"+Item.ValuesType.PLOA+")"+
+				"(SUM(?loa) AS ?"+Item.ValuesType.LOA+")"+
+				"(SUM(?atual) AS ?"+Item.ValuesType.LEI_MAIS_CREDITOS+")"+
+				"(SUM(?emp) AS ?"+Item.ValuesType.EMPENHADO+")"+
+				"(SUM(?liq) AS ?"+Item.ValuesType.LIQUIDADO+")"+
+				"(SUM(?pago) AS ?"+Item.ValuesType.PAGO+")"+
+				"WHERE {"+
+				"[] loa:temExercicio [loa:identificador "+exercicio+"];"+
+				"loa:temFuncao [loa:codigo \""+codFuncao+"\"; rdf:label ?"+ClassifierType.FUNCAO.getId()+"];"+
+				"loa:temSubfuncao [loa:codigo \""+codSubfuncao+"\"; rdf:label ?"+ClassifierType.SUBFUNCAO.getId()+"];"+
+				"loa:temUnidadeOrcamentaria [loa:codigo \""+codUnidade+"\"; rdf:label ?"+ClassifierType.UO.getId()+"];"+
+				"loa:temPrograma [loa:codigo \""+codPrograma+"\"; rdf:label ?"+ClassifierType.PROGRAMA.getId()+"];"+
+				"loa:temAcao [loa:codigo \""+codAcao+"\"; rdf:label ?"+ClassifierType.ACAO.getId()+"];"+
+				"loa:valorProjetoLei ?ploa ;"+
+				"loa:valorDotacaoInicial ?loa ;"+
+				"loa:valorLeiMaisCredito ?atual ;"+
+				"loa:valorEmpenhado ?emp ;"+
+				"loa:valorLiquidado ?liq ;"+
+				"loa:valorPago ?pago "+
+				"} GROUP BY ?"+ClassifierType.FUNCAO.getId()+" ?"+ClassifierType.SUBFUNCAO.getId()+
+				" ?"+ClassifierType.UO.getId()+" ?"+ClassifierType.PROGRAMA.getId()+" ?"+ClassifierType.ACAO.getId();
+			
+		
+		return query;
+	}
+
+	public Item getProgramaTrabalho(int exercicio, String unidade, String pt) {
 		String query, response;
 		EndpointSPARQL endpoint;
 		JsonParser<Double> parser;
 		
-		query = buildQuery(year);
+		query = buildQuery(exercicio, unidade, pt);
 		endpoint = new EndpointSPARQL();
-		parser = new JsonValuesParser();
 		
 		response = endpoint.execSPARQLQuery(query);
 		
-		return response!=null ? parser.convertJsonToList(response) : null;
-	}
-	
-	private String buildQuery(int year){
-		
-		String query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-				"PREFIX loa: <http://vocab.e.gov.br/2013/09/loa#>" +
-				"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
-                "SELECT sum ( ?val1 ) as ?"+PLOA_SPARQL+" sum ( ?val2 ) as ?"+LOA_SPARQL+" sum(?val3) as ?"+LEI_MAIS_CREDITO_SPARQL+" sum(?val4) as ?"+EMPENHADO_SPARQL+" sum(?val5) as ?"+LIQUIDADO_SPARQL+" sum(?val6) as ?"+PAGO_SPARQL+" WHERE {" +
-                "  ?i loa:temExercicio [loa:identificador "+year+"] ."+
-                "  ?i loa:valorProjetoLei ?val1 ." +
-                "  ?i loa:valorDotacaoInicial ?val2 ." +
-                "  ?i loa:valorLeiMaisCredito ?val3 ." +
-                "  ?i loa:valorEmpenhado ?val4 ." +
-                "  ?i loa:valorLiquidado ?val5 ." +
-                "  ?i loa:valorPago ?val6 ." +
-                "}";
-		
-		return query;
+		// TODO Implementar parsing
+		parser = new JsonValuesParser();
+		//return response!=null ? parser.convertJsonToList(response) : null;
+		return null;
 	}
 
 }

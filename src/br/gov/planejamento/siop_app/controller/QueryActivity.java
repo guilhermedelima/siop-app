@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import br.gov.planejamento.siop_app.dao.ProgramaTrabalhoDAO;
+import br.gov.planejamento.siop_app.model.Item;
 import br.gov.planejamento.siop_app.util.Validator;
 import br.unb.valuesapp.R;
 
@@ -24,7 +25,7 @@ public class QueryActivity extends Activity {
 
 	private Spinner exercicioSp;
 	private EditText unidadeET;
-	private EditText ptET;
+	private EditText programaTrabalhoET;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,11 @@ public class QueryActivity extends Activity {
 		
 		exercicioSp = (Spinner) findViewById(R.id.spinnerExercicio);
 		unidadeET = (EditText) findViewById(R.id.editTextUnidade);
-		ptET = (EditText) findViewById(R.id.editTextPt);
+		programaTrabalhoET = (EditText) findViewById(R.id.editTextPt);
+		
+		unidadeET.setText("14107");
+		programaTrabalhoET.setText("02.122.0570.20GP");
+		
 	}
 
 	@Override
@@ -52,7 +57,7 @@ public class QueryActivity extends Activity {
 		
 		int exercicio = Integer.valueOf(exercicioSp.getSelectedItem().toString());
 		String unidade = unidadeET.getText().toString();
-		String pt = ptET.getText().toString();
+		String pt = programaTrabalhoET.getText().toString();
 		
 		if(!info.isConnectedOrConnecting() || unidade == null || unidade.length() != 5 || pt == null || pt.length() != 16){
 			sendErrorMessage(info, unidade, pt);
@@ -92,12 +97,16 @@ public class QueryActivity extends Activity {
 
 		private Context myContext;
 		private ProgressDialog dialog;
-		private List<Double> values;
+		private Item resultadoProgrmaTrabalho;
 		private int exercicio;
+		private String unidade;
+		private String pt;
 		
 		public SearchThread(Context context, int exercicio, String unidade, String pt){
 			this.myContext = context;
 			this.exercicio = exercicio;
+			this.unidade = unidade;
+			this.pt = pt;
 		}
 		
 		@Override
@@ -113,9 +122,9 @@ public class QueryActivity extends Activity {
 			ProgramaTrabalhoDAO dao;
 			
 			dao = new ProgramaTrabalhoDAO();
-			values = dao.getValues(exercicio);
+			resultadoProgrmaTrabalho = dao.getProgramaTrabalho(exercicio, unidade, pt);
 			
-			return !(values == null || values.isEmpty());
+			return !(resultadoProgrmaTrabalho == null);
 		}
 		
 		@Override
@@ -151,3 +160,4 @@ public class QueryActivity extends Activity {
 		}
 	}	
 }
+

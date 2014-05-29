@@ -12,9 +12,42 @@ public class Item {
 	private double valueLiquidado;
 	private double valueEmpenhado;
 	private double valuePago;
-
+	
+	public enum ValuesType {
+		PLOA { 
+			public String toString() {
+		        return "ploa";
+		    }
+		},
+		LOA { 
+		    public String toString() {
+		        return "loa";
+		    }
+		},
+		LEI_MAIS_CREDITOS { 
+		    public String toString() {
+		        return "atual";
+		    }
+		},
+		EMPENHADO { 
+		    public String toString() {
+		        return "empenhado";
+		    }
+		},
+		LIQUIDADO { 
+		    public String toString() {
+		        return "liquidado";
+		    }
+		},
+		PAGO { 
+		    public String toString() {
+		        return "pago";
+		    }
+		}
+	};
+	
 	public Item(){	}
-
+	
 	public Item(List<Classifier> classifierList, int year,
 			double valueProjetoLei, double valueDotacaoInicial,
 			double valueLeiMaisCredito, double valueLiquidado,
