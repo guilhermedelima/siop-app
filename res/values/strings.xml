@@ -22,7 +22,7 @@
     <string name="unidadeLabel">Unidade orçamentária</string>
     <string name="unidadeHint">00000</string>
     <string name="ptLabel">Programa de trabalho</string>
-    <string name="ptHint">00.000.0000.XXXX</string>
+    <string name="ptHint">00.000.0000.XXXX.XXXX</string>
     
     <string name="titleError">Erro!</string>
     <string name="internetAcessError">Verifique sua conexão com a internet!</string>

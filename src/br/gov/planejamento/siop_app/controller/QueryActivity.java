@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import br.gov.planejamento.siop_app.R;
 import br.gov.planejamento.siop_app.dao.ProgramaTrabalhoDAO;
 import br.gov.planejamento.siop_app.model.Item;
+import br.gov.planejamento.siop_app.util.Validator;
 
 public class QueryActivity extends Activity {
 
@@ -52,7 +53,7 @@ public class QueryActivity extends Activity {
 		String unidade = unidadeET.getText().toString();
 		String pt = programaTrabalhoET.getText().toString();
 		
-		if(info == null || !info.isConnectedOrConnecting() || unidade == null || unidade.length() != 5 || pt == null || pt.length() != 16){
+		if(info == null || !info.isConnectedOrConnecting() || !Validator.checkPT(pt) || !Validator.checkUO(unidade)){
 			sendErrorMessage(info, unidade, pt);
 		} else {
 			SearchThread thread;
@@ -65,12 +66,12 @@ public class QueryActivity extends Activity {
 	private void sendErrorMessage(NetworkInfo info, String unidade, String pt) {
 		StringBuilder errorMsg = new StringBuilder();
 		
-		if(!info.isConnected()) {
+		if(info==null || !info.isConnected()) {
 			errorMsg.append(getString(R.string.internetAcessError));
 		} else {
-			if(unidade == null || unidade.length() != 5)
+			if(!Validator.checkUO(unidade))
 				errorMsg.append(getString(R.string.invalidUnidadeError) + "\n");
-			if(pt == null || pt.length() != 16)
+			if(!Validator.checkPT(pt))
 				errorMsg.append(getString(R.string.invalidPtError) + "\n");
 		}
 		

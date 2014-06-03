@@ -18,13 +18,13 @@ public class ProgramaTrabalhoDAOTest extends TestCase{
 		String pt, unidade;
 		Item item;
 		
-		pt = "02.122.0570.20GP";
+		pt = "02.122.0570.20GP.0053";
 		unidade = "14107";
 		item = dao.getProgramaTrabalho(2012, unidade, pt);
 		
 		Assert.assertNotNull(item);
 		Assert.assertNotNull(item.getClassifierList());
-		Assert.assertTrue(item.getClassifierList().size() == 5);
+		Assert.assertTrue(item.getClassifierList().size() == 6);
 		Assert.assertEquals(12651855.0, item.getValueProjetoLei());
 		Assert.assertEquals("Judiciária", item.getClassifierList().get(2).getLabel());
 		Assert.assertEquals("02", item.getClassifierList().get(2).getCode());
