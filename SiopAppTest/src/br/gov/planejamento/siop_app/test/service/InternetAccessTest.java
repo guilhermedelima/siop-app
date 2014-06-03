@@ -1,4 +1,4 @@
-package br.unb.valuesapp.test.service;
+package br.gov.planejamento.siop_app.test.service;
 
 import junit.framework.Assert;
 import android.content.Context;

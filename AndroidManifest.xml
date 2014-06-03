@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.unb.valuesapp"
+    package="br.gov.planejamento.siop_app"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -31,7 +31,7 @@
             android:parentActivityName="br.gov.planejamento.siop_app.controller.QueryActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.unb.valuesapp.controller.HomeActivity" />
+                android:value="br.gov.planejamento.siop_app.controller.QueryActivity" />
         </activity>
     </application>
 

@@ -1,16 +1,16 @@
-package br.unb.valuesapp.test.util.json;
+package br.gov.planejamento.siop_app.test.util.json;
 
 import java.util.List;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import br.unb.valuesapp.service.EndpointSPARQL;
-import br.unb.valuesapp.util.json.JsonParser;
-import br.unb.valuesapp.util.json.JsonValuesParser;
+import br.gov.planejamento.siop_app.service.EndpointSPARQL;
+import br.gov.planejamento.siop_app.util.json.JsonParser;
+import br.gov.planejamento.siop_app.util.json.JsonValuesParser;
 
 public class JsonValuesParserTest extends TestCase{
 	
-	private JsonParser<Double> parser;
+	private JsonParser<List<Double>> parser;
 	private EndpointSPARQL service;
 	
 	@Override
@@ -34,7 +34,7 @@ public class JsonValuesParserTest extends TestCase{
 		
 		Assert.assertNotNull(result);
 		
-		values = parser.convertJsonToList(result);
+		values = parser.convertJsonToObject(result);
 		
 		Assert.assertNotNull(values);
 		Assert.assertFalse(values.isEmpty());
@@ -59,7 +59,7 @@ public class JsonValuesParserTest extends TestCase{
 		
 		Assert.assertNotNull(result);
 		
-		values = parser.convertJsonToList(result);
+		values = parser.convertJsonToObject(result);
 		
 		Assert.assertNull(values);
 	}

@@ -1,7 +1,5 @@
 package br.gov.planejamento.siop_app.controller;
 
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
@@ -11,13 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import br.gov.planejamento.siop_app.R;
+import br.gov.planejamento.siop_app.model.Item;
 import br.gov.planejamento.siop_app.util.Validator;
-import br.unb.valuesapp.R;
 
 public class ValuesActivity extends Activity {
 
-	private List<Double> values;
-	private Integer selectedYear;
+	private Item item;
 	
 	private TextView titleEditText;
 	private TextView ploaTextView;
@@ -37,9 +35,7 @@ public class ValuesActivity extends Activity {
 		Bundle bundle;
 		
 		bundle = getIntent().getExtras();
-		
-//		values = (List<Double>) bundle.getSerializable(QueryActivity.VALUES_ARRAY);
-//		selectedYear = bundle.getInt(QueryActivity.SELECTED_YEAR);
+		item = (Item) bundle.getSerializable(QueryActivity.VALUE_ITEM);
 		
 		titleEditText = (TextView) findViewById(R.id.textViewValuesTitle);
 		ploaTextView = (TextView) findViewById(R.id.editTextPloa);
@@ -49,13 +45,13 @@ public class ValuesActivity extends Activity {
 		liquidadoTextView = (TextView) findViewById(R.id.editTextLiquidado);
 		pagoTextView = (TextView) findViewById(R.id.editTextPago);
 		
-		titleEditText.append(selectedYear.toString());
-		ploaTextView.setText( Validator.convertDouble(values.get(0)) );
-		loaTextView.setText(Validator.convertDouble(values.get(1)));
-		leiMaisCreditoTextView.setText(Validator.convertDouble(values.get(2)));
-		empenhadoTextView.setText(Validator.convertDouble(values.get(3)));
-		liquidadoTextView.setText(Validator.convertDouble(values.get(4)));
-		pagoTextView.setText(Validator.convertDouble(values.get(5)));
+		titleEditText.append( String.valueOf(item.getYear()) );
+		ploaTextView.setText( Validator.convertDouble(item.getValueProjetoLei()) );
+		loaTextView.setText(Validator.convertDouble(item.getValueDotacaoInicial()));
+		leiMaisCreditoTextView.setText(Validator.convertDouble(item.getValueLeiMaisCredito()));
+		empenhadoTextView.setText(Validator.convertDouble(item.getValueEmpenhado()));
+		liquidadoTextView.setText(Validator.convertDouble(item.getValueLiquidado()));
+		pagoTextView.setText(Validator.convertDouble(item.getValuePago()));
 	}
 
 

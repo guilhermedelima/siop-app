@@ -1,8 +1,8 @@
-package br.unb.valuesapp.test.service;
+package br.gov.planejamento.siop_app.test.service;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import br.unb.valuesapp.service.EndpointSPARQL;
+import br.gov.planejamento.siop_app.service.EndpointSPARQL;
 
 public class EndpointSPARQLTest extends TestCase {
 	

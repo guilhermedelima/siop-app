@@ -1,8 +1,5 @@
 package br.gov.planejamento.siop_app.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,16 +13,17 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import br.gov.planejamento.siop_app.R;
 import br.gov.planejamento.siop_app.dao.ProgramaTrabalhoDAO;
 import br.gov.planejamento.siop_app.model.Item;
-import br.gov.planejamento.siop_app.util.Validator;
-import br.unb.valuesapp.R;
 
 public class QueryActivity extends Activity {
 
 	private Spinner exercicioSp;
 	private EditText unidadeET;
 	private EditText programaTrabalhoET;
+	
+	public static final String VALUE_ITEM = "item";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +33,10 @@ public class QueryActivity extends Activity {
 		exercicioSp = (Spinner) findViewById(R.id.spinnerExercicio);
 		unidadeET = (EditText) findViewById(R.id.editTextUnidade);
 		programaTrabalhoET = (EditText) findViewById(R.id.editTextPt);
-		
-		unidadeET.setText("14107");
-		programaTrabalhoET.setText("02.122.0570.20GP");
-		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home, menu);
 		return true;
 	}
@@ -59,7 +52,7 @@ public class QueryActivity extends Activity {
 		String unidade = unidadeET.getText().toString();
 		String pt = programaTrabalhoET.getText().toString();
 		
-		if(!info.isConnectedOrConnecting() || unidade == null || unidade.length() != 5 || pt == null || pt.length() != 16){
+		if(info == null || !info.isConnectedOrConnecting() || unidade == null || unidade.length() != 5 || pt == null || pt.length() != 16){
 			sendErrorMessage(info, unidade, pt);
 		} else {
 			SearchThread thread;
@@ -124,7 +117,7 @@ public class QueryActivity extends Activity {
 			dao = new ProgramaTrabalhoDAO();
 			resultadoProgrmaTrabalho = dao.getProgramaTrabalho(exercicio, unidade, pt);
 			
-			return !(resultadoProgrmaTrabalho == null);
+			return resultadoProgrmaTrabalho != null;
 		}
 		
 		@Override
@@ -140,8 +133,7 @@ public class QueryActivity extends Activity {
 				Intent valuesIntent;
 				
 				valuesIntent = new Intent(myContext, ValuesActivity.class);
-//				valuesIntent.putExtra(VALUES_ARRAY, (ArrayList<Double>)values);
-//				valuesIntent.putExtra(SELECTED_YEAR, exercicio);
+				valuesIntent.putExtra(VALUE_ITEM, resultadoProgrmaTrabalho);
 				
 				startActivity(valuesIntent);
 			}else{
@@ -150,8 +142,8 @@ public class QueryActivity extends Activity {
 				AlertDialog.Builder builder;
 				
 				builder = new AlertDialog.Builder(myContext);
-//				builder.setTitle(ERROR_TITLE);
-//				builder.setMessage(ERROR_SERVICE);
+				builder.setTitle(R.string.titleError);
+				builder.setMessage(R.string.invalidItem);
 				builder.setPositiveButton("OK", null);
 				
 				alert = builder.create();

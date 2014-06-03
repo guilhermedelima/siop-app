@@ -1,7 +1,10 @@
 package br.gov.planejamento.siop_app.model;
 
-public class Classifier{
+import java.io.Serializable;
 
+public class Classifier implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String label;
 	private String code;
 	private int year;

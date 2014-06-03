@@ -6,10 +6,10 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class JsonValuesParser implements JsonParser<Double>{
+public class JsonValuesParser implements JsonParser<List<Double>>{
 
 	@Override
-	public List<Double> convertJsonToList(String responseText) {
+	public List<Double> convertJsonToObject(String responseText) {
 
 		JSONObject jsonObject;
 		JSONObject headerObject;

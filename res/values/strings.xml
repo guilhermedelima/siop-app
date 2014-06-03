@@ -30,6 +30,7 @@
     <string name="invalidExercicioError">Exercício inválido.</string>
     <string name="invalidPtError">Cód. do Programa de trabalho inválido.</string>
     <string name="invalidUnidadeError">Cód. da Unidade orçamentária inváido.</string>
+    <string name="invalidItem">Resultado não encontrado.</string>
     
     <string name="loading">Carregando...</string>
 

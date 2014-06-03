@@ -1,9 +1,11 @@
 package br.gov.planejamento.siop_app.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Item {
+public class Item implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private List<Classifier> classifierList;
 	private int year;
 	private double valueProjetoLei;
