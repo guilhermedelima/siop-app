@@ -1,7 +1,6 @@
 package br.gov.planejamento.siop_app.controller;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.Spinner;
 import br.gov.planejamento.siop_app.R;
@@ -25,21 +24,17 @@ public class QueryActivity extends Activity {
 	private EditText programaTrabalhoET;
 	
 	public static final String VALUE_ITEM = "item";
+	public static final String VALUE_PT = "pt";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_query);
 		
 		exercicioSp = (Spinner) findViewById(R.id.spinnerExercicio);
 		unidadeET = (EditText) findViewById(R.id.editTextUnidade);
 		programaTrabalhoET = (EditText) findViewById(R.id.editTextPt);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.home, menu);
-		return true;
 	}
 	
 	public void query(View v){
@@ -75,16 +70,7 @@ public class QueryActivity extends Activity {
 				errorMsg.append(getString(R.string.invalidPtError) + "\n");
 		}
 		
-		AlertDialog alert;
-		AlertDialog.Builder builder;
-		
-		builder = new AlertDialog.Builder(this)
-			.setTitle(getString(R.string.titleError))
-			.setPositiveButton("OK", null)
-			.setMessage(errorMsg.toString());
-		
-		alert = builder.create();
-		alert.show();
+		Validator.showDialogError(this, errorMsg.toString());
 	}
 	
 	private class SearchThread extends AsyncTask<Void, Void, Boolean>{
@@ -135,20 +121,12 @@ public class QueryActivity extends Activity {
 				
 				valuesIntent = new Intent(myContext, ValuesActivity.class);
 				valuesIntent.putExtra(VALUE_ITEM, resultadoProgrmaTrabalho);
+				valuesIntent.putExtra(VALUE_PT, pt);
 				
 				startActivity(valuesIntent);
 			}else{
-				
-				AlertDialog alert;
-				AlertDialog.Builder builder;
-				
-				builder = new AlertDialog.Builder(myContext);
-				builder.setTitle(R.string.titleError);
-				builder.setMessage(R.string.invalidItem);
-				builder.setPositiveButton("OK", null);
-				
-				alert = builder.create();
-				alert.show();
+
+				Validator.showDialogError(myContext, getString(R.string.invalidItem));
 			}
 		}
 	}	

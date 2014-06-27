@@ -2,6 +2,11 @@ package br.gov.planejamento.siop_app.util;
 
 import java.text.DecimalFormat;
 
+import br.gov.planejamento.siop_app.R;
+
+import android.app.AlertDialog;
+import android.content.Context;
+
 
 public class Validator {
 
@@ -9,9 +14,9 @@ public class Validator {
 		
 		DecimalFormat formatter;
 		
-		formatter = new DecimalFormat("#,###,##0.00");
+		formatter = new DecimalFormat("R$ #,###,##0.00");
 		
-		return number == null ? "0,00" : formatter.format(number);
+		return number == null ? "R$ 0,00" : formatter.format(number);
 	}
 	
 	public static boolean checkPT(String pt){
@@ -26,5 +31,18 @@ public class Validator {
 		String regex = "[0-9]{5}";
 		
 		return uo != null && uo.matches(regex);
+	}
+	
+	public static void showDialogError(Context ActivityContext, String message){
+		AlertDialog.Builder builder;
+		AlertDialog dialog;
+		
+		builder = new AlertDialog.Builder(ActivityContext);
+		builder.setTitle(ActivityContext.getString(R.string.titleError));
+		builder.setMessage(message);
+		builder.setPositiveButton("OK", null);
+		
+		dialog = builder.create();
+		dialog.show();
 	}
 }
