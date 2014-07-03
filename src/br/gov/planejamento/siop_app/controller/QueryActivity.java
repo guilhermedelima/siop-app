@@ -1,5 +1,7 @@
 package br.gov.planejamento.siop_app.controller;
 
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,7 +17,10 @@ import android.widget.Spinner;
 import br.gov.planejamento.siop_app.R;
 import br.gov.planejamento.siop_app.dao.ProgramaTrabalhoDAO;
 import br.gov.planejamento.siop_app.model.Item;
+import br.gov.planejamento.siop_app.service.EndpointSPARQL;
 import br.gov.planejamento.siop_app.util.Validator;
+import br.gov.planejamento.siop_app.util.json.JsonParser;
+import br.gov.planejamento.siop_app.util.json.JsonProgramaTrabalhoParser;
 
 public class QueryActivity extends Activity {
 
@@ -100,8 +105,14 @@ public class QueryActivity extends Activity {
 		protected Boolean doInBackground(Void... value) {
 
 			ProgramaTrabalhoDAO dao;
+			JsonParser<HashMap<String, Object>> parser;
+			EndpointSPARQL endpoit;
 			
-			dao = new ProgramaTrabalhoDAO();
+			endpoit = new EndpointSPARQL();
+			parser = new JsonProgramaTrabalhoParser();
+			
+			dao = new ProgramaTrabalhoDAO(endpoit, parser);
+			
 			resultadoProgrmaTrabalho = dao.getProgramaTrabalho(exercicio, unidade, pt);
 			
 			return resultadoProgrmaTrabalho != null;

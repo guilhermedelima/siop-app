@@ -3,7 +3,6 @@ package br.gov.planejamento.siop_app.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import br.gov.planejamento.siop_app.model.Classifier;
 import br.gov.planejamento.siop_app.model.ClassifierType;
@@ -14,13 +13,16 @@ import br.gov.planejamento.siop_app.util.json.JsonProgramaTrabalhoParser;
 
 public class ProgramaTrabalhoDAO {
 
-	public ProgramaTrabalhoDAO(){
+	private EndpointSPARQL endpoint;
+	private JsonParser<HashMap<String, Object>> parser;
+	
+	public ProgramaTrabalhoDAO(EndpointSPARQL endpoint, JsonParser<HashMap<String, Object>> parser){
+		this.endpoint = endpoint;
+		this.parser = parser;
 	}
 
 	public Item getProgramaTrabalho(int year, String unidade, String pt) {
 		String query, response;
-		EndpointSPARQL endpoint;
-		JsonParser<HashMap<String, Object>> parser;
 		HashMap<String, Object> values;
 		String codFuncao, codSubfuncao, codUnidade, codPrograma, codAcao, codLocalizador;
 		Item item;
@@ -38,7 +40,7 @@ public class ProgramaTrabalhoDAO {
 
 		query = buildQuery(year, codFuncao, codSubfuncao, codUnidade, codPrograma, codAcao, codLocalizador);
 		response = endpoint.execSPARQLQuery(query);
-		values = parser.convertJsonToObject(response);
+		values = response != null ? parser.convertJsonToObject(response) : null;
 
 		item = values!=null && !values.isEmpty() ? convertMapToItem(values, year, codFuncao, 
 				codSubfuncao, codUnidade, codPrograma, codAcao, codLocalizador) : null; 
@@ -51,75 +53,37 @@ public class ProgramaTrabalhoDAO {
 			String codSubfuncao, String codUnidade, String codPrograma, String codAcao, String codLocalizador){
 
 		List<Classifier> classifiers;
-		String cod, label;
-		ClassifierType type;
-		Double value;
 		Item item;
 
+		String labelFuncao, labelSubFuncao, labelUnidade; 
+		String labelPrograma, labelAcao, labelLocalizador;
+		double ploa, loa, leiMaisCredito, empenhado, liquidado, pago;
+		
+		labelFuncao = (String) values.get(ClassifierType.FUNCAO.getId());
+		labelSubFuncao = (String) values.get(ClassifierType.SUBFUNCAO.getId());
+		labelUnidade = (String) values.get(ClassifierType.UO.getId());
+		labelPrograma = (String) values.get(ClassifierType.PROGRAMA.getId());
+		labelAcao = (String) values.get(ClassifierType.ACAO.getId());
+		labelLocalizador = (String) values.get(ClassifierType.LOCALIZADOR.getId());
+		
 		classifiers = new ArrayList<Classifier>();
-		item = new Item();
-
-		for(Entry<String, Object> entry : values.entrySet()){
-
-			cod = null;
-			type = null;
-
-			if(entry.getKey().equals(ClassifierType.FUNCAO.getId())){
-				cod = codFuncao;
-				type = ClassifierType.FUNCAO;
-
-			}else if(entry.getKey().equals(ClassifierType.SUBFUNCAO.getId())){
-				cod = codSubfuncao;
-				type = ClassifierType.SUBFUNCAO;
-
-			}else if(entry.getKey().equals(ClassifierType.UO.getId())){
-				cod = codUnidade;
-				type = ClassifierType.UO;
-
-			}else if(entry.getKey().equals(ClassifierType.PROGRAMA.getId())){
-				cod = codPrograma;
-				type = ClassifierType.PROGRAMA;
-
-			}else if(entry.getKey().equals(ClassifierType.ACAO.getId())){
-				cod = codAcao;
-				type = ClassifierType.ACAO;
-
-			}else if(entry.getKey().equals(ClassifierType.LOCALIZADOR.getId())){
-				cod = codLocalizador;
-				type = ClassifierType.LOCALIZADOR;
-				
-			}else{
-				value = Double.valueOf((String)entry.getValue()); 
-
-				if(entry.getKey().equals(Item.ValuesType.PLOA.toString())){
-					item.setValueProjetoLei( value );
-
-				}else if(entry.getKey().equals(Item.ValuesType.LOA.toString())){
-					item.setValueDotacaoInicial( value );
-
-				}else if(entry.getKey().equals(Item.ValuesType.LEI_MAIS_CREDITOS.toString())){
-					item.setValueDotacaoInicial( value );
-
-				}else if(entry.getKey().equals(Item.ValuesType.EMPENHADO.toString())){
-					item.setValueEmpenhado( value );
-
-				}else if(entry.getKey().equals(Item.ValuesType.LIQUIDADO.toString())){
-					item.setValueLiquidado( value );
-
-				}else if(entry.getKey().equals(Item.ValuesType.PAGO.toString())){
-					item.setValuePago( value );
-				}
-			}
-
-			if( cod != null && type != null){
-				label = (String)entry.getValue();
-				classifiers.add(new Classifier(label, cod, year, type));
-			}
-		}
-
-		item.setClassifierList(classifiers);
-		item.setYear(year);
-
+		
+		classifiers.add(new Classifier(labelFuncao, codFuncao, year, ClassifierType.FUNCAO));
+		classifiers.add(new Classifier(labelSubFuncao, codSubfuncao, year, ClassifierType.SUBFUNCAO));
+		classifiers.add(new Classifier(labelUnidade, codUnidade, year, ClassifierType.UO));
+		classifiers.add(new Classifier(labelPrograma, codPrograma, year, ClassifierType.PROGRAMA));
+		classifiers.add(new Classifier(labelAcao, codAcao, year, ClassifierType.ACAO));
+		classifiers.add(new Classifier(labelLocalizador, codLocalizador, year, ClassifierType.LOCALIZADOR));
+		
+		ploa = Double.valueOf( (String)values.get(Item.ValuesType.PLOA.toString()) );
+		loa = Double.valueOf( (String)values.get(Item.ValuesType.LOA.toString()) );
+		leiMaisCredito = Double.valueOf( (String)values.get(Item.ValuesType.LEI_MAIS_CREDITOS.toString()) );
+		empenhado= Double.valueOf( (String)values.get(Item.ValuesType.EMPENHADO.toString()) );
+		liquidado = Double.valueOf( (String)values.get(Item.ValuesType.LIQUIDADO.toString()) );
+		pago = Double.valueOf( (String)values.get(Item.ValuesType.PAGO.toString()) );
+		
+		item = new Item(classifiers, year, ploa, loa, leiMaisCredito, liquidado, empenhado, pago);
+		
 		return item;
 	}
 

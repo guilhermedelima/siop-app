@@ -22,8 +22,16 @@ public class EndpointSPARQLTest extends TestCase {
 		
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result.length() > 0);
+	}
+	
+	public void testHttpResponseWithInvalidQuery(){
+		EndpointSPARQL service;
+		String result;
 		
-		System.out.println(result);
+		service = new EndpointSPARQL();
+		result = service.execSPARQLQuery("Invalid Query");
+		
+		Assert.assertNull(result);
 	}
 
 }
