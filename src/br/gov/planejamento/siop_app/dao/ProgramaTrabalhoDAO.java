@@ -9,7 +9,6 @@ import br.gov.planejamento.siop_app.model.ClassifierType;
 import br.gov.planejamento.siop_app.model.Item;
 import br.gov.planejamento.siop_app.service.EndpointSPARQL;
 import br.gov.planejamento.siop_app.util.json.JsonParser;
-import br.gov.planejamento.siop_app.util.json.JsonProgramaTrabalhoParser;
 
 public class ProgramaTrabalhoDAO {
 
@@ -34,9 +33,6 @@ public class ProgramaTrabalhoDAO {
 		codPrograma = ptSplit[2];
 		codAcao = ptSplit[3];
 		codLocalizador = ptSplit[4];
-
-		endpoint = new EndpointSPARQL();
-		parser = new JsonProgramaTrabalhoParser();
 
 		query = buildQuery(year, codFuncao, codSubfuncao, codUnidade, codPrograma, codAcao, codLocalizador);
 		response = endpoint.execSPARQLQuery(query);
