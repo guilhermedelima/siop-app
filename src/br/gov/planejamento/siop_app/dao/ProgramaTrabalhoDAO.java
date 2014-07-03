@@ -17,7 +17,7 @@ public class ProgramaTrabalhoDAO {
 	public ProgramaTrabalhoDAO(){
 	}
 
-	public Item getProgramaTrabalho(int exercicio, String unidade, String pt) {
+	public Item getProgramaTrabalho(int year, String unidade, String pt) {
 		String query, response;
 		EndpointSPARQL endpoint;
 		JsonParser<HashMap<String, Object>> parser;
@@ -36,18 +36,18 @@ public class ProgramaTrabalhoDAO {
 		endpoint = new EndpointSPARQL();
 		parser = new JsonProgramaTrabalhoParser();
 
-		query = buildQuery(exercicio, codFuncao, codSubfuncao, codUnidade, codPrograma, codAcao, codLocalizador);
+		query = buildQuery(year, codFuncao, codSubfuncao, codUnidade, codPrograma, codAcao, codLocalizador);
 		response = endpoint.execSPARQLQuery(query);
 		values = parser.convertJsonToObject(response);
 
-		item = values!=null && !values.isEmpty() ? convertMapToItem(values, exercicio, codFuncao, 
+		item = values!=null && !values.isEmpty() ? convertMapToItem(values, year, codFuncao, 
 				codSubfuncao, codUnidade, codPrograma, codAcao, codLocalizador) : null; 
 
 		return item;
 	}
 
 
-	private Item convertMapToItem(HashMap<String, Object> values, int exercicio, String codFuncao, 
+	private Item convertMapToItem(HashMap<String, Object> values, int year, String codFuncao, 
 			String codSubfuncao, String codUnidade, String codPrograma, String codAcao, String codLocalizador){
 
 		List<Classifier> classifiers;
@@ -113,18 +113,18 @@ public class ProgramaTrabalhoDAO {
 
 			if( cod != null && type != null){
 				label = (String)entry.getValue();
-				classifiers.add(new Classifier(label, cod, exercicio, type));
+				classifiers.add(new Classifier(label, cod, year, type));
 			}
 		}
 
 		item.setClassifierList(classifiers);
-		item.setYear(exercicio);
+		item.setYear(year);
 
 		return item;
 	}
 
 
-	private String buildQuery(int exercicio, String codFuncao, String codSubfuncao, 
+	private String buildQuery(int year, String codFuncao, String codSubfuncao, 
 			String codUnidade, String codPrograma, String codAcao, String codLocalizador){
 
 		String query = "SELECT "+
@@ -141,7 +141,7 @@ public class ProgramaTrabalhoDAO {
 				"(SUM(?liq) AS ?"+Item.ValuesType.LIQUIDADO+")"+
 				"(SUM(?pago) AS ?"+Item.ValuesType.PAGO+")"+
 				"WHERE {"+
-				"[] loa:temExercicio [loa:identificador "+exercicio+"];"+
+				"[] loa:temExercicio [loa:identificador "+year+"];"+
 				"loa:"+ClassifierType.FUNCAO.getProperty()+" [loa:codigo \""+codFuncao+"\"; rdf:label ?"+ClassifierType.FUNCAO.getId()+"];"+
 				"loa:"+ClassifierType.SUBFUNCAO.getProperty()+" [loa:codigo \""+codSubfuncao+"\"; rdf:label ?"+ClassifierType.SUBFUNCAO.getId()+"];"+
 				"loa:"+ClassifierType.UO.getProperty()+" [loa:codigo \""+codUnidade+"\"; rdf:label ?"+ClassifierType.UO.getId()+"];"+
