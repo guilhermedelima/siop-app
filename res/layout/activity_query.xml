@@ -14,43 +14,44 @@
         tools:context=".QueryActivity" >
 
         <TextView
-            android:id="@+id/textViewHomeTitle"
+            android:id="@+id/textViewQueryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/homeTitle"
+            android:text="@string/siopTitle"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center" />
 
         <TextView
-            android:id="@+id/textViewExplanation"
+            android:id="@+id/textViewQueryExplanation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewHomeTitle"
+            android:layout_below="@+id/textViewQueryTitle"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="@string/explanation"
+            android:text="@string/explanationPT"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/textViewExercicio"
+            android:id="@+id/textViewQueryExercicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewExplanation"
-            android:layout_below="@+id/textViewExplanation"
+            android:layout_alignLeft="@+id/textViewQueryExplanation"
+            android:layout_below="@+id/textViewQueryExplanation"
             android:layout_marginTop="60dp"
             android:text="@string/exericioLabel"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
         <Spinner
-            android:id="@+id/spinnerExercicio"
+            android:id="@+id/spinnerQueryExercicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewExercicio"
-            android:layout_below="@+id/textViewExercicio"
+            android:layout_alignLeft="@+id/textViewQueryExercicio"
+            android:layout_below="@+id/textViewQueryExercicio"
             android:layout_marginTop="15dp"
             android:entries="@array/exercicios" />
 
@@ -58,8 +59,8 @@
             android:id="@+id/textViewUnidade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewExercicio"
-            android:layout_below="@+id/spinnerExercicio"
+            android:layout_alignLeft="@+id/textViewQueryExercicio"
+            android:layout_below="@+id/spinnerQueryExercicio"
             android:layout_marginTop="20dp"
             android:text="@string/unidadeLabel"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -69,7 +70,7 @@
             android:id="@+id/editTextUnidade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewExercicio"
+            android:layout_alignLeft="@+id/textViewQueryExercicio"
             android:layout_below="@+id/textViewUnidade"
             android:layout_marginTop="15dp"
             android:ems="4"
@@ -80,7 +81,7 @@
             android:id="@+id/textViewPt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewExercicio"
+            android:layout_alignLeft="@+id/textViewQueryExercicio"
             android:layout_below="@+id/editTextUnidade"
             android:layout_marginTop="20dp"
             android:text="@string/ptLabel"
@@ -91,7 +92,7 @@
             android:id="@+id/editTextPt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewExercicio"
+            android:layout_alignLeft="@+id/textViewQueryExercicio"
             android:layout_below="@+id/textViewPt"
             android:layout_marginTop="15dp"
             android:ems="9"
@@ -107,6 +108,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:onClick="query"
-            android:text="@string/buttonText" />
+            android:text="@string/buttonQuery" />
     </RelativeLayout>
 </ScrollView>

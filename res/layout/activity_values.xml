@@ -33,10 +33,10 @@
             android:paddingTop="@dimen/activity_vertical_margin">
 
             <TextView
-                android:id="@+id/textViewPtInfo"
+                android:id="@+id/textViewIDInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ptLabel"
+                android:text="@string/type"
                 android:textSize="15sp"
                 android:textColor="@color/SteelBlue"
                 android:textStyle="bold" />
@@ -45,7 +45,7 @@
                 android:id="@+id/textViewPtCod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PtCod"
+                android:text="@string/codigo"
                 android:textSize="15sp"
                 android:textColor="@color/SteelBlue"
                 android:textStyle="bold" />
@@ -54,7 +54,7 @@
                 android:id="@+id/textViewPtLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PtAcaoLabel"
+                android:text="@string/label"
                 android:textSize="15sp"
                 android:textColor="@color/SteelBlue"
                 android:layout_marginTop="7dp" />

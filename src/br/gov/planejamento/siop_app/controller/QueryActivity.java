@@ -28,8 +28,7 @@ public class QueryActivity extends Activity {
 	private EditText unidadeET;
 	private EditText programaTrabalhoET;
 	
-	public static final String VALUE_ITEM = "item";
-	public static final String VALUE_PT = "pt";
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class QueryActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_query);
 		
-		exercicioSp = (Spinner) findViewById(R.id.spinnerExercicio);
+		exercicioSp = (Spinner) findViewById(R.id.spinnerQueryExercicio);
 		unidadeET = (EditText) findViewById(R.id.editTextUnidade);
 		programaTrabalhoET = (EditText) findViewById(R.id.editTextPt);
 	}
@@ -49,7 +48,7 @@ public class QueryActivity extends Activity {
 		manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		info = manager.getActiveNetworkInfo();
 		
-		int exercicio = Integer.valueOf(exercicioSp.getSelectedItem().toString());
+		int year = Integer.valueOf(exercicioSp.getSelectedItem().toString());
 		String unidade = unidadeET.getText().toString();
 		String pt = programaTrabalhoET.getText().toString();
 		
@@ -58,7 +57,7 @@ public class QueryActivity extends Activity {
 		} else {
 			SearchThread thread;
 			
-			thread = new SearchThread(this, exercicio, unidade, pt);
+			thread = new SearchThread(this, year, unidade, pt);
 			thread.execute();
 		}
 	}
@@ -82,14 +81,14 @@ public class QueryActivity extends Activity {
 
 		private Context myContext;
 		private ProgressDialog dialog;
-		private Item resultadoProgrmaTrabalho;
-		private int exercicio;
+		private Item ptResult;
+		private int year;
 		private String unidade;
 		private String pt;
 		
 		public SearchThread(Context context, int exercicio, String unidade, String pt){
 			this.myContext = context;
-			this.exercicio = exercicio;
+			this.year = exercicio;
 			this.unidade = unidade;
 			this.pt = pt;
 		}
@@ -113,9 +112,9 @@ public class QueryActivity extends Activity {
 			
 			dao = new ProgramaTrabalhoDAO(endpoit, parser);
 			
-			resultadoProgrmaTrabalho = dao.getProgramaTrabalho(exercicio, unidade, pt);
+			ptResult = dao.getProgramaTrabalho(year, unidade, pt);
 			
-			return resultadoProgrmaTrabalho != null;
+			return ptResult != null;
 		}
 		
 		@Override
@@ -131,8 +130,9 @@ public class QueryActivity extends Activity {
 				Intent valuesIntent;
 				
 				valuesIntent = new Intent(myContext, ValuesActivity.class);
-				valuesIntent.putExtra(VALUE_ITEM, resultadoProgrmaTrabalho);
-				valuesIntent.putExtra(VALUE_PT, pt);
+				valuesIntent.putExtra(ValuesActivity.VALUE_ITEM, ptResult);
+				valuesIntent.putExtra(ValuesActivity.VALUE_PT, pt);
+				valuesIntent.putExtra(ValuesActivity.VALUE_ACTION, ValuesActivity.ACTION_PT);
 				
 				startActivity(valuesIntent);
 			}else{

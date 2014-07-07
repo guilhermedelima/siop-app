@@ -3,17 +3,44 @@
 
     <string name="app_name">SIOP</string>
     <string name="action_settings">Configurações</string>
-    
-    <string name="homeTitle">SIOP - Sistema Integrado de Orçamento e Planejamento</string>
-    <string name="explanation">Escolha o Exerício financeiro e os códigos da Unidade orçamentária e Programa de trabalho para consultar</string>
-    <string name="buttonText">Consultar</string>
+    <string name="title_activity_query">QueryActivity</string>
     <string name="title_activity_values">ValuesActivity</string>
+    <string name="title_activity_classifier">ClassifierActivity</string>
+    <string name="title_activity_classifier_list">ClassifierListActivity</string>
+
+    <!-- Titles -->
+    <string name="siopTitle">SIOP - Sistema Integrado de Orçamento e Planejamento</string>
+    <string name="explanationHome">Consulte o Orçamento Federal por Classificações Orçamentárias ou por Programa de trabalho</string>
+    <string name="explanationPT">Escolha o Exerício financeiro e os códigos da Unidade orçamentária e Programa de trabalho para consultar</string>
+    <string name="explanationClassifier">Escolha o Exerício financeiro e o Classificador Orçamentário para consultar</string>
+
+    <!-- Buttons -->
+    <string name="buttonPT">Programa de Trabalho</string>
+    <string name="buttonClassifier">Classificações Orçamentárias</string>
+    <string name="buttonQuery">Consultar</string>
+    <string name="buttonBack">Voltar</string>
+
+    <!-- QueryActivity -->
+    <string name="exericioLabel">Exercício</string>
+    <string name="unidadeLabel">Unidade orçamentária</string>
+    <string name="unidadeHint">00000</string>
+    <string name="ptLabel">Programa de trabalho</string>
+    <string name="ptHint">00.000.0000.XXXX.XXXX</string>
+
+    <!-- ClassifierActivity -->
+    <string name="classifiersLabel">Classicações Orçamentárias</string>
+    <string name="radioFuncao">Função</string>
+    <string name="radioPrograma">Programa</string>
+    <string name="radioGND">Grupo de Natureza da Despesa</string>
+
+    <!-- ClassifierListActivity -->
+    <string name="classifierLabel">Classificador - ANO</string>
     
+    <!-- ValuesActivity -->
     <string name="valuesTitle">Orçamento Federal - </string>
-    
-    <string name="PtCod">Código PT</string>
-    <string name="PtAcaoLabel">Descrição da Ação</string>
-    
+    <string name="type">Identificador</string>
+    <string name="codigo">Código</string>
+    <string name="label">Descrição do Classificador</string>
     <string name="ploa">Valor Projeto Lei</string>
     <string name="loa">Valor Dotação Inicial</string>
     <string name="leiMaisCredito">Valor Lei Mais Crédito</string>
@@ -21,30 +48,23 @@
     <string name="liquidado">Valor Liquidado</string>
     <string name="pago">Valor Pago</string>
     <string name="defaultValue">R$ 10.000,00</string>
-    
-    <string name="buttonBack">Voltar</string>
-    
-    <string name="exericioLabel">Exercício</string>
-    <string name="unidadeLabel">Unidade orçamentária</string>
-    <string name="unidadeHint">00000</string>
-    <string name="ptLabel">Programa de trabalho</string>
-    <string name="ptHint">00.000.0000.XXXX.XXXX</string>
-    
+    <string name="menu_classifier_title">Descrição</string>
+    <string name="menu_classifier_action">Ver detalhes</string>
+
+    <!-- Error -->
     <string name="titleError">Erro!</string>
     <string name="internetAcessError">Verifique sua conexão com a internet!</string>
-    
     <string name="invalidExercicioError">Exercício inválido.</string>
     <string name="invalidPtError">Cód. do Programa de trabalho inválido.</string>
     <string name="invalidUnidadeError">Cód. da Unidade orçamentária inváido.</string>
     <string name="invalidItem">Resultado não encontrado.</string>
-    
+    <string name="invalidClassifier">Erro com servidor! Tente novamente mais tarde.</string>
     <string name="loading">Carregando&#8230;</string>
-    
+
+    <!-- Adapter PT - Classifier -->
     <string name="item_classifier_type">Classificador</string>
     <string name="item_classifier_cod">Código</string>
     <string name="item_classifier_label">Descrição</string>
     
-    <string name="menu_classifier_title">Descrição</string>
-    <string name="menu_classifier_action">Ver detalhes</string>
 
 </resources>

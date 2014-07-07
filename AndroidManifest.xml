@@ -7,9 +7,9 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
-    
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -17,8 +17,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="br.gov.planejamento.siop_app.controller.QueryActivity"
-            android:label="@string/app_name">
+            android:name="br.gov.planejamento.siop_app.controller.HomeActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,12 +26,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.gov.planejamento.siop_app.controller.ValuesActivity"
-            android:label="@string/title_activity_values"
-            android:parentActivityName="br.gov.planejamento.siop_app.controller.QueryActivity" >
+            android:name="br.gov.planejamento.siop_app.controller.QueryActivity"
+            android:label="@string/title_activity_query"
+            android:parentActivityName="br.gov.planejamento.siop_app.controller.HomeActivity"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.gov.planejamento.siop_app.controller.QueryActivity" />
+                android:value="br.gov.planejamento.siop_app.controller.HomeActivity" />
+        </activity>
+        <activity
+            android:name="br.gov.planejamento.siop_app.controller.ValuesActivity"
+            android:label="@string/title_activity_values" >
+        </activity>
+        <activity
+            android:name="br.gov.planejamento.siop_app.controller.ClassifierActivity"
+            android:label="@string/title_activity_classifier"
+            android:parentActivityName="br.gov.planejamento.siop_app.controller.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.gov.planejamento.siop_app.controller.HomeActivity" />
+        </activity>
+        <activity
+            android:name="br.gov.planejamento.siop_app.controller.ClassifierListActivity"
+            android:label="@string/title_activity_classifier_list"
+            android:parentActivityName="br.gov.planejamento.siop_app.controller.ClassifierActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.gov.planejamento.siop_app.controller.ClassifierActivity" />
         </activity>
     </application>
 

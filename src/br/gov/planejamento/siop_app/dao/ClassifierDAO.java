@@ -8,7 +8,6 @@ import br.gov.planejamento.siop_app.model.Classifier;
 import br.gov.planejamento.siop_app.model.ClassifierType;
 import br.gov.planejamento.siop_app.model.Item;
 import br.gov.planejamento.siop_app.service.EndpointSPARQL;
-import br.gov.planejamento.siop_app.util.json.JsonClassifierParser;
 import br.gov.planejamento.siop_app.util.json.JsonParser;
 
 public class ClassifierDAO {
@@ -25,9 +24,6 @@ public class ClassifierDAO {
 		String query, response;
 		List<HashMap<String, Object>> listMap;
 		List<Item> items;
-		
-		endpoint = new EndpointSPARQL();
-		parser = new JsonClassifierParser();
 		
 		query = buildQuery(type, year);
 		response = endpoint.execSPARQLQuery(query);
