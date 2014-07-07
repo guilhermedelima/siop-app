@@ -81,7 +81,7 @@ public class ValuesActivity extends Activity {
 
 	public void setupClassifier(){
 		idTextView.setText(item.getClassifierList().get(0).getType().getName());
-		codTextView.setText(item.getClassifierList().get(0).getCode());
+		codTextView.append(" " + item.getClassifierList().get(0).getCode());
 		labelTextView.setText(item.getClassifierList().get(0).getLabel());
 	}
 

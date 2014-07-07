@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:text="@string/classifierLabel"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />

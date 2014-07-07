@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">SIOP</string>
+    <string name="image_siop">SIOP Logo</string>
     <string name="action_settings">Configurações</string>
     <string name="title_activity_query">QueryActivity</string>
     <string name="title_activity_values">ValuesActivity</string>
@@ -11,7 +12,7 @@
     <!-- Titles -->
     <string name="siopTitle">SIOP - Sistema Integrado de Orçamento e Planejamento</string>
     <string name="explanationHome">Consulte o Orçamento Federal por Classificações Orçamentárias ou por Programa de trabalho</string>
-    <string name="explanationPT">Escolha o Exerício financeiro e os códigos da Unidade orçamentária e Programa de trabalho para consultar</string>
+    <string name="explanationPT">Escolha o Exercício financeiro e os códigos da Unidade orçamentária e Programa de trabalho para consultar</string>
     <string name="explanationClassifier">Escolha o Exerício financeiro e o Classificador Orçamentário para consultar</string>
 
     <!-- Buttons -->
@@ -28,7 +29,7 @@
     <string name="ptHint">00.000.0000.XXXX.XXXX</string>
 
     <!-- ClassifierActivity -->
-    <string name="classifiersLabel">Classicações Orçamentárias</string>
+    <string name="classifiersLabel">Classificações Orçamentárias</string>
     <string name="radioFuncao">Função</string>
     <string name="radioPrograma">Programa</string>
     <string name="radioGND">Grupo de Natureza da Despesa</string>
@@ -39,7 +40,7 @@
     <!-- ValuesActivity -->
     <string name="valuesTitle">Orçamento Federal - </string>
     <string name="type">Identificador</string>
-    <string name="codigo">Código</string>
+    <string name="codigo">Código:</string>
     <string name="label">Descrição do Classificador</string>
     <string name="ploa">Valor Projeto Lei</string>
     <string name="loa">Valor Dotação Inicial</string>
