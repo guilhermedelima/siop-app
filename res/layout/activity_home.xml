@@ -1,57 +1,62 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".HomeActivity" >
+    android:layout_height="fill_parent" >
 
-    <ImageView 
-        android:id="@+id/imageSiop"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/siop" 
-        android:layout_gravity="center"
-        android:contentDescription="@string/image_siop"/>
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".HomeActivity" >
 
-    <TextView
-        android:id="@+id/textViewHomeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:gravity="center"
-        android:text="@string/siopTitle"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/imageSiop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/image_siop"
+            android:src="@drawable/siop" />
 
-    <TextView
-        android:id="@+id/textViewHomeExplanation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="@string/explanationHome"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/textViewHomeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="@string/siopTitle"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonClassifier"
-        style="@style/btnStyleShakespeare"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:onClick="nextActivity"
-        android:text="@string/buttonClassifier" />
-    
-    <Button
-        android:id="@+id/buttonPT"
-        style="@style/btnStyleShakespeare"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="nextActivity"
-        android:text="@string/buttonPT" />
+        <TextView
+            android:id="@+id/textViewHomeExplanation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="@string/explanationHome"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/buttonClassifier"
+            style="@style/btnStyleShakespeare"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:onClick="nextActivity"
+            android:text="@string/buttonClassifier" />
+
+        <Button
+            android:id="@+id/buttonPT"
+            style="@style/btnStyleShakespeare"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="nextActivity"
+            android:text="@string/buttonPT" />
+    </LinearLayout>
+
+</ScrollView>

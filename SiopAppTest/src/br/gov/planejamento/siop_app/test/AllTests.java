@@ -4,6 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import br.gov.planejamento.siop_app.test.data.ClassifierDAOTest;
 import br.gov.planejamento.siop_app.test.data.ProgramaTrabalhoDAOTest;
+import br.gov.planejamento.siop_app.test.data.QueryDAOTest;
 import br.gov.planejamento.siop_app.test.service.EndpointSPARQLTest;
 import br.gov.planejamento.siop_app.test.service.InternetAccessTest;
 import br.gov.planejamento.siop_app.test.util.ValidatorTest;
@@ -25,6 +26,7 @@ public class AllTests {
 		suite.addTestSuite(JsonClassifierParserTest.class);
 		suite.addTestSuite(ProgramaTrabalhoDAOTest.class);
 		suite.addTestSuite(ClassifierDAOTest.class);
+		suite.addTestSuite(QueryDAOTest.class);
 		
 		//$JUnit-END$
 		return suite;

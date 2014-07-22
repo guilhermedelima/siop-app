@@ -67,5 +67,11 @@
     <string name="item_classifier_cod">Código</string>
     <string name="item_classifier_label">Descrição</string>
     
+    <!-- Adapter Query  -->
+    <string name="item_query_name">Nome da Consulta</string>
+    <string name="item_query_year">Exercício</string>
+    <string name="item_query_uo">Código Unidade</string>
+    <string name="item_query_pt">Código do Programa de Trabalho</string>
+    
 
 </resources>
