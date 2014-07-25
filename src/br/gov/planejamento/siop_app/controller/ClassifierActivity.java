@@ -90,6 +90,7 @@ public class ClassifierActivity extends Activity {
 		protected void onPreExecute() {
 			dialog = new ProgressDialog(myContext);
 			dialog.setMessage(getText(R.string.loading));
+			dialog.setCancelable(false);
 			dialog.show();
 		}
 		

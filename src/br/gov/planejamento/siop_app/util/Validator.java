@@ -33,6 +33,13 @@ public class Validator {
 		return uo != null && uo.matches(regex);
 	}
 	
+	public static boolean checkQueryName(String name){
+		
+		String regex = "^[a-zA-Z0-9]{3,20}$";
+		
+		return name != null && name.matches(regex);
+	}
+	
 	public static void showDialogError(Context ActivityContext, String message){
 		AlertDialog.Builder builder;
 		AlertDialog dialog;

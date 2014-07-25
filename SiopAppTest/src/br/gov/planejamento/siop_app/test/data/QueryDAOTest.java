@@ -15,6 +15,7 @@ public class QueryDAOTest extends AndroidTestCase{
 	private RenamingDelegatingContext testContext;
 	private QueryDAO dao;
 	
+	//TODO: Testar Porque RenamingDelegatingContext Não cria um database separado
 	@Override
 	public void setUp() throws Exception {
 		testContext = new RenamingDelegatingContext(getContext(), "test_");

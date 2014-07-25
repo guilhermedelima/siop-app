@@ -27,6 +27,17 @@
     <string name="unidadeHint">00000</string>
     <string name="ptLabel">Programa de trabalho</string>
     <string name="ptHint">00.000.0000.XXXX.XXXX</string>
+    <string name="dialogGetQueryName">Nova Consulta</string>
+    <string name="dialogPositive">Salvar</string>
+    <string name="dialogNegative">Cancelar</string>
+    <string name="messageGetQueryName">Digite um nome para a consulta.</string>
+    <string name="dialogShowList">Minhas Consultas</string>
+    <string name="context_menu_title">Ação para Consulta</string>
+    <string name="context_menu_exec">Executar Consulta</string>
+    <string name="context_menu_delete">Remover Consulta</string>
+    <string name="menu_query_save_action">Salvar Consulta</string>
+    <string name="menu_query_show_action">Listar Consulta Salvas</string>
+    
 
     <!-- ClassifierActivity -->
     <string name="classifiersLabel">Classificações Orçamentárias</string>
@@ -60,6 +71,9 @@
     <string name="invalidUnidadeError">Cód. da Unidade orçamentária inváido.</string>
     <string name="invalidItem">Resultado não encontrado.</string>
     <string name="invalidClassifier">Erro com servidor! Tente novamente mais tarde.</string>
+    <string name="invalidQueryName">O nome deve ter apenas letras e números, entre 3 e 20 caracteres.</string>
+    <string name="invalidSaveQueryName">Já existe uma consulta com este nome.</string>
+    <string name="emptyQueryList">Não existem consultas salvas.</string>
     <string name="loading">Carregando&#8230;</string>
 
     <!-- Adapter PT - Classifier -->

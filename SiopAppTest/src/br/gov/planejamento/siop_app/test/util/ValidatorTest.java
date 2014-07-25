@@ -51,4 +51,16 @@ public class ValidatorTest extends TestCase{
 		Assert.assertFalse(Validator.checkUO(null));
 	}
 	
+	public void testQueryName(){
+		Assert.assertTrue(Validator.checkQueryName("Ab0"));
+		Assert.assertTrue(Validator.checkQueryName("1234567890QWERTasdfg"));
+		Assert.assertTrue(Validator.checkQueryName("Guilherme123"));
+	}
+	
+	public void testInvalidName(){
+		Assert.assertFalse(Validator.checkQueryName("Ab"));
+		Assert.assertFalse(Validator.checkQueryName("1234567890QWERTasdfg1"));
+		Assert.assertFalse(Validator.checkQueryName("Guilherme123;*"));
+	}
+	
 }
