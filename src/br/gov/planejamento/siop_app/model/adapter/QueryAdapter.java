@@ -15,10 +15,12 @@ public class QueryAdapter extends ArrayAdapter<Query>{
 	
 	private List<Query> queryList;
 	private LayoutInflater inflater;
+	private Context myContext;
 
 	public QueryAdapter(Context context, int resource, List<Query> objects) {
 		super(context, resource, objects);
 
+		myContext = context;
 		queryList = objects;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -46,8 +48,8 @@ public class QueryAdapter extends ArrayAdapter<Query>{
 		q = queryList.get(position);
 		
 		holder.queryNameTextView.setText(q.getName());
-		holder.queryYearTextView.setText(String.valueOf(q.getYear()));
-		holder.queryUoTextView.setText(q.getUo());
+		holder.queryYearTextView.setText(myContext.getString(R.string.item_query_year) +  " " + String.valueOf(q.getYear()));
+		holder.queryUoTextView.setText(myContext.getString(R.string.item_query_uo) +  " " + q.getUo());
 		holder.queryPtTextView.setText(q.getPtCod());
 		
 		return convertView;

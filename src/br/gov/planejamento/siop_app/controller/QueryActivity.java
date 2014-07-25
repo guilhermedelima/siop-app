@@ -1,5 +1,6 @@
 package br.gov.planejamento.siop_app.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class QueryActivity extends Activity {
 	private EditText programaTrabalhoET;
 
 	private QueryAdapter adapter;
+	private ListView queryListView;
 	private AlertDialog alertListView;
 	
 	@Override
@@ -55,15 +57,27 @@ public class QueryActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_query);
 		
+		ListQueryThread thread;
+		
 		exercicioSp = (Spinner) findViewById(R.id.spinnerQueryExercicio);
 		unidadeET = (EditText) findViewById(R.id.editTextUnidade);
 		programaTrabalhoET = (EditText) findViewById(R.id.editTextPt);
+		
+		adapter = null;
+		
+		thread = new ListQueryThread(this);
+		thread.execute();
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.query, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		return adapter != null;
 	}
 	
 	@Override
@@ -102,7 +116,7 @@ public class QueryActivity extends Activity {
 			final EditText nameEditText;
 			
 			nameEditText = new EditText(this);
-			nameEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+			nameEditText.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 			
 			builder = new AlertDialog.Builder(this);
 			builder.setTitle(getString(R.string.dialogGetQueryName));
@@ -137,10 +151,10 @@ public class QueryActivity extends Activity {
 	
 	public void showListQuery(){
 		
-		ListQueryThread thread;
-		
-		thread = new ListQueryThread(this);
-		thread.execute();
+		if( adapter.getCount() > 0)
+			alertListView.show();	
+		else	
+			Validator.showDialogError(this, getString(R.string.emptyQueryList));	
 	}
 	
 	public void query(View v){
@@ -268,24 +282,27 @@ public class QueryActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 
+			Query q;
 			QueryDAO dao;
-			List<Query> queryList;
 			
-			dao = new QueryDAO(myContext);
-			
-			queryList = dao.getAllObjects();
+			dao = new QueryDAO(myContext.getApplicationContext());
 			
 			if( action == ACTION_SAVE ){
-				for(Query q : queryList){
+				for(int i=0; i<adapter.getCount(); i++){
+					q = adapter.getItem(i);
+					
 					if( q.getName().equals(query.getName()) ){
 						return false;
 					}
 				}
 				
-				dao.save(query);
+				if ( dao.save(query) );
+					adapter.add(query);
+				
 			}else{
 				
-				dao.delete(query);
+				if( dao.delete(query) )
+					adapter.remove(query);
 			}
 			
 			return true;
@@ -299,9 +316,10 @@ public class QueryActivity extends Activity {
 		protected void onPostExecute(Boolean result) {
 			dialog.cancel();
 			
-			if(!result){
+			if(!result)
 				Validator.showDialogError(myContext, getString(R.string.invalidSaveQueryName));	
-			}	
+			else
+				adapter.notifyDataSetChanged();
 		}		
 	}
 	
@@ -328,11 +346,11 @@ public class QueryActivity extends Activity {
 
 			QueryDAO dao;
 			
-			dao = new QueryDAO(myContext);
+			dao = new QueryDAO(myContext.getApplicationContext());
 			
 			listQuery = dao.getAllObjects();			
 			
-			return listQuery != null &&  !listQuery.isEmpty();
+			return listQuery != null;
 		}
 		
 		@Override
@@ -343,31 +361,27 @@ public class QueryActivity extends Activity {
 		protected void onPostExecute(Boolean result) {
 			dialog.cancel();
 			
-			if(result){
-				AlertDialog.Builder builder;
-				ListView queryListView;
-				
-				queryListView = new ListView(myContext);
-				queryListView.setCacheColorHint(Color.TRANSPARENT);
-				queryListView.setBackgroundColor(Color.WHITE);
-				
-				adapter = new QueryAdapter(myContext, R.layout.item_query, listQuery);
-				queryListView.setAdapter(adapter);
-				
-				registerForContextMenu(queryListView);
-				
-				builder = new AlertDialog.Builder(myContext);
-				builder.setTitle(getString(R.string.dialogShowList));
-				builder.setView(queryListView);
-				builder.setPositiveButton("Ok", null);
-				
-				alertListView = builder.create();
-				alertListView.show();
-				
-			}else{
-				
-				Validator.showDialogError(myContext, getString(R.string.emptyQueryList));	
-			}	
+			if(!result){
+				listQuery = new ArrayList<Query>();
+			}
+			
+			queryListView = new ListView(myContext);
+			queryListView.setCacheColorHint(Color.TRANSPARENT);
+			queryListView.setBackgroundColor(Color.WHITE);
+			
+			adapter = new QueryAdapter(myContext, R.layout.item_query, listQuery);
+			queryListView.setAdapter(adapter);
+			
+			registerForContextMenu(queryListView);
+			
+			AlertDialog.Builder builder;
+			
+			builder = new AlertDialog.Builder(myContext);	
+			builder.setTitle(getString(R.string.dialogShowList));
+			builder.setView(queryListView);
+			builder.setPositiveButton("Ok", null);
+			
+			alertListView = builder.create();
 		}		
 	}
 	
@@ -382,17 +396,27 @@ public class QueryActivity extends Activity {
 		menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem clickedItem) {
-				
+				NetworkInfo infoNet;
+				ConnectivityManager manager;
 				AdapterContextMenuInfo info;
 				Query q;
 				SearchThread thread;
 				
+				manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+				infoNet = manager.getActiveNetworkInfo();
+				
 				info = (AdapterContextMenuInfo) clickedItem.getMenuInfo();
 				q = adapter.getItem(info.position);
 
-				//TODO: VERIFICAR INTERNET
-				thread = new SearchThread(QueryActivity.this, q.getYear(), q.getUo(), q.getPtCod());
-				thread.execute();
+				if( infoNet != null && infoNet.isConnectedOrConnecting() ){
+					
+					thread = new SearchThread(QueryActivity.this, q.getYear(), q.getUo(), q.getPtCod());
+					thread.execute();
+					
+				}else{
+					
+					Validator.showDialogError(QueryActivity.this, getString(R.string.internetAcessError));
+				}
 				
 				alertListView.cancel();
 				
@@ -413,9 +437,6 @@ public class QueryActivity extends Activity {
 
 				thread = new QueryActionThread(QueryActivity.this, q, ACTION_DELETE);
 				thread.execute();
-				
-				adapter.remove(q);
-				adapter.notifyDataSetChanged();
 				
 				alertListView.cancel();
 				

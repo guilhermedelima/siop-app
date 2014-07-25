@@ -35,7 +35,7 @@ public class Validator {
 	
 	public static boolean checkQueryName(String name){
 		
-		String regex = "^[a-zA-Z0-9]{3,20}$";
+		String regex = "^[a-zA-Z0-9][a-zA-Z0-9 ]{2,19}$";
 		
 		return name != null && name.matches(regex);
 	}

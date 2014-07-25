@@ -7,7 +7,6 @@ import junit.framework.Assert;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import br.gov.planejamento.siop_app.dao.QueryDAO;
-import br.gov.planejamento.siop_app.dao.sqlite.SiopDatabase;
 import br.gov.planejamento.siop_app.model.Query;
 
 public class QueryDAOTest extends AndroidTestCase{
@@ -83,9 +82,5 @@ public class QueryDAOTest extends AndroidTestCase{
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		
-		SiopDatabase db = SiopDatabase.getInstance(testContext);
-		db.clearDatabase();
-		db.close();
 	}
 }

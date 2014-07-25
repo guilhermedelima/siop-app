@@ -35,7 +35,7 @@ public class SiopDatabase extends SQLiteOpenHelper{
 
 	public static SiopDatabase getInstance(Context myContext){
 		if( instance == null ){
-			instance = new SiopDatabase(myContext.getApplicationContext());
+			instance = new SiopDatabase(myContext);
 		}
 		return instance;
 	}

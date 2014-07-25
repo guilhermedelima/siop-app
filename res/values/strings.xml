@@ -33,10 +33,10 @@
     <string name="messageGetQueryName">Digite um nome para a consulta.</string>
     <string name="dialogShowList">Minhas Consultas</string>
     <string name="context_menu_title">Ação para Consulta</string>
-    <string name="context_menu_exec">Executar Consulta</string>
-    <string name="context_menu_delete">Remover Consulta</string>
+    <string name="context_menu_exec">Executar</string>
+    <string name="context_menu_delete">Remover</string>
     <string name="menu_query_save_action">Salvar Consulta</string>
-    <string name="menu_query_show_action">Listar Consulta Salvas</string>
+    <string name="menu_query_show_action">Listar Consultas Salvas</string>
     
 
     <!-- ClassifierActivity -->
@@ -83,9 +83,9 @@
     
     <!-- Adapter Query  -->
     <string name="item_query_name">Nome da Consulta</string>
-    <string name="item_query_year">Exercício</string>
-    <string name="item_query_uo">Código Unidade</string>
-    <string name="item_query_pt">Código do Programa de Trabalho</string>
+    <string name="item_query_year">Exercício: </string>
+    <string name="item_query_uo">Unidade Orçamentária: </string>
+    <string name="item_query_pt">Programa de Trabalho</string>
     
 
 </resources>
