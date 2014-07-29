@@ -6,6 +6,8 @@ import br.gov.planejamento.siop_app.R;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 
 public class Validator {
@@ -33,7 +35,7 @@ public class Validator {
 		return uo != null && uo.matches(regex);
 	}
 	
-	public static boolean checkQueryName(String name){
+	public static boolean checkName(String name){
 		
 		String regex = "^[a-zA-Z0-9][a-zA-Z0-9 ]{2,19}$";
 		
@@ -51,5 +53,16 @@ public class Validator {
 		
 		dialog = builder.create();
 		dialog.show();
+	}
+	
+	public static boolean checkInternetAccess(Context myContext){
+		
+		ConnectivityManager manager;
+		NetworkInfo info;
+
+		manager = (ConnectivityManager) myContext.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+		info = manager.getActiveNetworkInfo();
+		
+		return info!=null && info.isConnectedOrConnecting();
 	}
 }

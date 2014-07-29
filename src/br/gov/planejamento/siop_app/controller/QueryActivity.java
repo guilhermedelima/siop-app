@@ -11,8 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -107,9 +105,7 @@ public class QueryActivity extends Activity {
 		unidade = unidadeET.getText().toString();
 		pt = programaTrabalhoET.getText().toString();
 		
-		if(!Validator.checkPT(pt) || !Validator.checkUO(unidade)){
-			sendErrorMessage(null, unidade, pt);
-		}else{
+		if(Validator.checkPT(pt) && Validator.checkUO(unidade)){
 			
 			AlertDialog dialog;
 			AlertDialog.Builder builder;
@@ -124,21 +120,21 @@ public class QueryActivity extends Activity {
 			builder.setView(nameEditText);
 			builder.setPositiveButton(getString(R.string.dialogPositive), new DialogInterface.OnClickListener() {
 				@Override
-				public void onClick(DialogInterface arg0, int whitc) {
+				public void onClick(DialogInterface arg0, int whitch) {
 					String text;
 					QueryActionThread thread;
 					Query query;
 					
 					text = nameEditText.getText().toString();
 					
-					if( Validator.checkQueryName(text) ){
+					if( Validator.checkName(text) ){
 						query = new Query(text, unidade, pt, year);
 						thread = new QueryActionThread(QueryActivity.this, query, QueryActivity.ACTION_SAVE);
 						
 						thread.execute();
 					}else{
 						
-						Validator.showDialogError(QueryActivity.this, getString(R.string.invalidQueryName));
+						Validator.showDialogError(QueryActivity.this, getString(R.string.invalidName));
 					}
 				}
 			});
@@ -146,6 +142,10 @@ public class QueryActivity extends Activity {
 			
 			dialog = builder.create();
 			dialog.show();
+			
+		}else{
+			
+			sendErrorMessage(unidade, pt);
 		}
 	}
 	
@@ -158,40 +158,38 @@ public class QueryActivity extends Activity {
 	}
 	
 	public void query(View v){
-		ConnectivityManager manager;
-		NetworkInfo info;
-		
-		manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-		info = manager.getActiveNetworkInfo();
 		
 		int year = Integer.valueOf(exercicioSp.getSelectedItem().toString());
 		String unidade = unidadeET.getText().toString();
 		String pt = programaTrabalhoET.getText().toString();
 		
-		if(info == null || !info.isConnectedOrConnecting() || !Validator.checkPT(pt) || !Validator.checkUO(unidade)){
-			sendErrorMessage(info, unidade, pt);
-		} else {
+		if( Validator.checkInternetAccess(this) && Validator.checkPT(pt) && Validator.checkUO(unidade)){
+			
 			SearchThread thread;
 			
 			thread = new SearchThread(this, year, unidade, pt);
 			thread.execute();
+			
+		}else{
+			
+			sendErrorMessage(unidade, pt);
 		}
 	}
 	
-	private void sendErrorMessage(NetworkInfo info, String unidade, String pt) {
+	private void sendErrorMessage(String unidade, String pt) {
 		StringBuilder errorMsg = new StringBuilder();
 		
 		if(!Validator.checkUO(unidade))
 			errorMsg.append(getString(R.string.invalidUnidadeError) + "\n");
 		else if(!Validator.checkPT(pt))
 			errorMsg.append(getString(R.string.invalidPtError) + "\n");
-		else if(info==null || !info.isConnected())
-			errorMsg.append(getString(R.string.internetAcessError));
+		else if(!Validator.checkInternetAccess(this))
+			errorMsg.append(getString(R.string.internetAccessError));
 		
 		Validator.showDialogError(this, errorMsg.toString());
 	}
 	
-	private class SearchThread extends AsyncTask<Void, Void, Boolean>{
+	public static class SearchThread extends AsyncTask<Void, Void, Boolean>{
 
 		private Context myContext;
 		private ProgressDialog dialog;
@@ -210,7 +208,7 @@ public class QueryActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			dialog = new ProgressDialog(myContext);
-			dialog.setMessage(getString(R.string.loading));
+			dialog.setMessage(myContext.getString(R.string.loading));
 			dialog.setCancelable(false);
 			dialog.show();
 		}
@@ -247,12 +245,13 @@ public class QueryActivity extends Activity {
 				valuesIntent = new Intent(myContext, ValuesActivity.class);
 				valuesIntent.putExtra(ValuesActivity.VALUE_ITEM, ptResult);
 				valuesIntent.putExtra(ValuesActivity.VALUE_PT, pt);
+				valuesIntent.putExtra(ValuesActivity.VALUE_UO, unidade);
 				valuesIntent.putExtra(ValuesActivity.VALUE_ACTION, ValuesActivity.ACTION_PT);
 				
-				startActivity(valuesIntent);
+				myContext.startActivity(valuesIntent);
 			}else{
 
-				Validator.showDialogError(myContext, getString(R.string.invalidItem));
+				Validator.showDialogError(myContext, myContext.getString(R.string.invalidItem));
 			}
 		}
 	}
@@ -316,10 +315,10 @@ public class QueryActivity extends Activity {
 		protected void onPostExecute(Boolean result) {
 			dialog.cancel();
 			
-			if(!result)
-				Validator.showDialogError(myContext, getString(R.string.invalidSaveQueryName));	
-			else
+			if(result)	
 				adapter.notifyDataSetChanged();
+			else
+				Validator.showDialogError(myContext, getString(R.string.invalidSaveQueryName));
 		}		
 	}
 	
@@ -386,7 +385,7 @@ public class QueryActivity extends Activity {
 	}
 	
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(final ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		
 		menu.setHeaderTitle(R.string.context_menu_title);
@@ -396,26 +395,23 @@ public class QueryActivity extends Activity {
 		menu.getItem(0).setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem clickedItem) {
-				NetworkInfo infoNet;
-				ConnectivityManager manager;
 				AdapterContextMenuInfo info;
 				Query q;
 				SearchThread thread;
 				
-				manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-				infoNet = manager.getActiveNetworkInfo();
-				
 				info = (AdapterContextMenuInfo) clickedItem.getMenuInfo();
 				q = adapter.getItem(info.position);
-
-				if( infoNet != null && infoNet.isConnectedOrConnecting() ){
+				
+				menu.setHeaderTitle(q.getName());
+				
+				if( Validator.checkInternetAccess(QueryActivity.this) ){
 					
 					thread = new SearchThread(QueryActivity.this, q.getYear(), q.getUo(), q.getPtCod());
 					thread.execute();
 					
 				}else{
 					
-					Validator.showDialogError(QueryActivity.this, getString(R.string.internetAcessError));
+					Validator.showDialogError(QueryActivity.this, getString(R.string.internetAccessError));
 				}
 				
 				alertListView.cancel();
@@ -434,6 +430,8 @@ public class QueryActivity extends Activity {
 				
 				info = (AdapterContextMenuInfo) clickedItem.getMenuInfo();
 				q = adapter.getItem(info.position);
+				
+				menu.setHeaderTitle(q.getName());
 
 				thread = new QueryActionThread(QueryActivity.this, q, ACTION_DELETE);
 				thread.execute();

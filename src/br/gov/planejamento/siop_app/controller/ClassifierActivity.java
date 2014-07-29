@@ -8,8 +8,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -42,19 +40,12 @@ public class ClassifierActivity extends Activity {
 	}
 	
 	public void query(View v){
-		ConnectivityManager manager;
-		NetworkInfo info;
 		int year, selectedId;
 		String classifierText;
 		ClassifierType type;
 		SearchThread thread;
 		
-		manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-		info = manager.getActiveNetworkInfo();
-		
-		if(info==null || !info.isConnectedOrConnecting()){
-			Validator.showDialogError(this, getString(R.string.internetAcessError));
-		}else{
+		if( Validator.checkInternetAccess(this) ){
 			
 			year = Integer.valueOf(yearSpinner.getSelectedItem().toString());
 			selectedId = radioGroupClassifier.getCheckedRadioButtonId();
@@ -69,6 +60,10 @@ public class ClassifierActivity extends Activity {
 			
 			thread = new SearchThread(this, type, year);
 			thread.execute();
+			
+		}else{
+			
+			Validator.showDialogError(this, getString(R.string.internetAccessError));
 		}
 	}
 	

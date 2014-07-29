@@ -2,11 +2,16 @@ package br.gov.planejamento.siop_app.controller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.Intent.ShortcutIconResource;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.TextView;
 import br.gov.planejamento.siop_app.R;
 import br.gov.planejamento.siop_app.model.Classifier;
@@ -19,6 +24,8 @@ public class ValuesActivity extends Activity {
 
 	public static final String VALUE_ITEM = "item";
 	public static final String VALUE_PT = "pt";
+	public static final String VALUE_UO = "uo";
+	public static final String VALUE_YEAR = "ano";
 	public static final String VALUE_ACTION = "action";
 
 	public static final Integer ACTION_PT = 1;
@@ -26,6 +33,8 @@ public class ValuesActivity extends Activity {
 
 	private Item item;
 	private Integer action;
+	private String pt, uo;
+	private int year;
 	private AlertDialog.Builder builderAdapterDialog;
 
 	private TextView titleEditText;
@@ -46,13 +55,13 @@ public class ValuesActivity extends Activity {
 		setContentView(R.layout.activity_values);
 
 		Bundle bundle;
-		String pt;
 
 		bundle = getIntent().getExtras();
 		item = (Item) bundle.getSerializable(ValuesActivity.VALUE_ITEM);
 		action = bundle.getInt(VALUE_ACTION);
 
-		pt = (String) bundle.getString(ValuesActivity.VALUE_PT);
+		pt = bundle.getString(ValuesActivity.VALUE_PT);
+		year = item.getYear();
 
 		titleEditText = (TextView) findViewById(R.id.textViewValuesTitle);
 		idTextView = (TextView) findViewById(R.id.textViewIDInfo);
@@ -65,7 +74,7 @@ public class ValuesActivity extends Activity {
 		liquidadoTextView = (TextView) findViewById(R.id.editTextLiquidado);
 		pagoTextView = (TextView) findViewById(R.id.editTextPago);
 
-		titleEditText.append(" " + String.valueOf(item.getYear()));
+		titleEditText.append(" " + String.valueOf(year));
 		ploaTextView.setText(Validator.convertDouble(item.getValueProjetoLei()));
 		loaTextView.setText(Validator.convertDouble(item.getValueDotacaoInicial()));
 		leiMaisCreditoTextView.setText(Validator.convertDouble(item.getValueLeiMaisCredito()));
@@ -73,9 +82,10 @@ public class ValuesActivity extends Activity {
 		liquidadoTextView.setText(Validator.convertDouble(item.getValueLiquidado()));
 		pagoTextView.setText(Validator.convertDouble(item.getValuePago()));
 		
-		if(action == ACTION_PT)
+		if(action == ACTION_PT){
+			uo = bundle.getString(VALUE_UO);
 			setupPT(pt);
-		else
+		}else
 			setupClassifier();
 	}
 
@@ -123,7 +133,9 @@ public class ValuesActivity extends Activity {
 		case R.id.item_pt_info:
 			showClassifierDialog();
 			return true;
-
+		case R.id.item_pt_shortcut:
+			createShortcut();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -139,5 +151,58 @@ public class ValuesActivity extends Activity {
 		alert = builderAdapterDialog.create();
 		alert.show();
 	}
+	
+	public void createShortcut(){
+		AlertDialog dialog;
+		AlertDialog.Builder builder;
+		final EditText nameEditText;
+		
+		nameEditText = new EditText(this);
+		nameEditText.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+		
+		builder = new AlertDialog.Builder(this);
+		builder.setTitle(getString(R.string.dialog_shortcut_title));
+		builder.setMessage(getString(R.string.dialog_shortcut_message));
+		builder.setView(nameEditText);
+		builder.setNegativeButton(getString(R.string.dialog_shortcut_negative), null);
+		builder.setPositiveButton(getString(R.string.dialog_shortcut_positive), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int whitch) {
+				String text;
+				ShortcutIconResource icon;
+				Intent shortCutIntent;
+				Intent addIntent;
 
+				text = nameEditText.getText().toString();
+				
+				if( Validator.checkName(text) ){
+					
+					shortCutIntent = new Intent(getApplicationContext(), HomeActivity.class);
+					shortCutIntent.setAction(Intent.ACTION_MAIN);
+				    
+					shortCutIntent.putExtra(HomeActivity.VALUE_PT, pt);
+					shortCutIntent.putExtra(HomeActivity.VALUE_UO, uo);
+					shortCutIntent.putExtra(HomeActivity.VALUE_YEAR, year);
+					
+				    addIntent = new Intent();
+				    icon = Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.drawable.siop);
+				    
+				    addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortCutIntent);
+				    addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, text);
+				    addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
+				    
+				    addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+					
+				    getApplicationContext().sendBroadcast(addIntent);
+				    
+				}else{
+					
+					Validator.showDialogError(ValuesActivity.this, getString(R.string.invalidName));
+				}
+			}
+		});
+		
+		dialog = builder.create();
+		dialog.show();
+	}
 }

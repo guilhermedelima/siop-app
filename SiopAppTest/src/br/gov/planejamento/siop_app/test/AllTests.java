@@ -6,7 +6,6 @@ import br.gov.planejamento.siop_app.test.data.ClassifierDAOTest;
 import br.gov.planejamento.siop_app.test.data.ProgramaTrabalhoDAOTest;
 import br.gov.planejamento.siop_app.test.data.QueryDAOTest;
 import br.gov.planejamento.siop_app.test.service.EndpointSPARQLTest;
-import br.gov.planejamento.siop_app.test.service.InternetAccessTest;
 import br.gov.planejamento.siop_app.test.util.ValidatorTest;
 import br.gov.planejamento.siop_app.test.util.json.JsonClassifierParserTest;
 import br.gov.planejamento.siop_app.test.util.json.JsonProgramaTrabalhoParserTest;
@@ -18,9 +17,8 @@ public class AllTests {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
 		//$JUnit-BEGIN$
 
-		suite.addTestSuite(InternetAccessTest.class);
-		suite.addTestSuite(EndpointSPARQLTest.class);
 		suite.addTestSuite(ValidatorTest.class);
+		suite.addTestSuite(EndpointSPARQLTest.class);
 		suite.addTestSuite(JsonValuesParserTest.class);
 		suite.addTestSuite(JsonProgramaTrabalhoParserTest.class);
 		suite.addTestSuite(JsonClassifierParserTest.class);

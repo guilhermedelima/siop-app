@@ -1,10 +1,10 @@
 package br.gov.planejamento.siop_app.test.util;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import android.test.AndroidTestCase;
 import br.gov.planejamento.siop_app.util.Validator;
 
-public class ValidatorTest extends TestCase{
+public class ValidatorTest extends AndroidTestCase{
 	
 	public void testFormatterCorrectDouble(){
 		Assert.assertEquals("R$ 12,00", Validator.convertDouble(12.00)); 
@@ -52,18 +52,22 @@ public class ValidatorTest extends TestCase{
 	}
 	
 	public void testQueryName(){
-		Assert.assertTrue(Validator.checkQueryName("Ab0"));
-		Assert.assertTrue(Validator.checkQueryName("1234567890QWERTasdfg"));
-		Assert.assertTrue(Validator.checkQueryName("Guilherme123"));
-		Assert.assertTrue(Validator.checkQueryName("consulta basica 2"));
+		Assert.assertTrue(Validator.checkName("Ab0"));
+		Assert.assertTrue(Validator.checkName("1234567890QWERTasdfg"));
+		Assert.assertTrue(Validator.checkName("Guilherme123"));
+		Assert.assertTrue(Validator.checkName("consulta basica 2"));
 	}
 	
 	public void testInvalidName(){
-		Assert.assertFalse(Validator.checkQueryName("Ab"));
-		Assert.assertFalse(Validator.checkQueryName("1234567890QWERTasdfg1"));
-		Assert.assertFalse(Validator.checkQueryName("Guilherme123;*"));
-		Assert.assertFalse(Validator.checkQueryName(" amigo"));
-		Assert.assertFalse(Validator.checkQueryName("   "));
+		Assert.assertFalse(Validator.checkName("Ab"));
+		Assert.assertFalse(Validator.checkName("1234567890QWERTasdfg1"));
+		Assert.assertFalse(Validator.checkName("Guilherme123;*"));
+		Assert.assertFalse(Validator.checkName(" amigo"));
+		Assert.assertFalse(Validator.checkName("   "));
+	}
+	
+	public void testInternetAccess(){
+		Assert.assertTrue(Validator.checkInternetAccess(getContext()));
 	}
 	
 }
