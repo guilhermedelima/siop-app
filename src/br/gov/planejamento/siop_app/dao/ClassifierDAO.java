@@ -87,8 +87,8 @@ public class ClassifierDAO {
 				"[] loa:temExercicio [loa:identificador "+year+"];";
 
 		query += type.equals(ClassifierType.ORGAO) ? 
-				"loa:"+ClassifierType.UO.getProperty()+" [loa:"+type.getProperty()+" [rdf:label ?"+type.getId()+" ; loa:codigo ?cod"+type.getId()+"]] ;"
-				: "loa:"+type.getProperty()+" [rdf:label ?"+type.getId()+" ; loa:codigo ?cod"+type.getId()+"];";
+				"loa:"+ClassifierType.UO.getProperty()+" [loa:"+type.getProperty()+" [rdfs:label ?"+type.getId()+" ; loa:codigo ?cod"+type.getId()+"]] ;"
+				: "loa:"+type.getProperty()+" [rdfs:label ?"+type.getId()+" ; loa:codigo ?cod"+type.getId()+"];";
 
 		query += "loa:valorProjetoLei ?ploa ;"+
 				"loa:valorDotacaoInicial ?loa ;"+

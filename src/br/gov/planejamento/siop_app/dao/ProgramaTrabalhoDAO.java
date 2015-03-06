@@ -60,7 +60,7 @@ public class ProgramaTrabalhoDAO {
 		labelUnidade = (String) values.get(ClassifierType.UO.getId());
 		labelPrograma = (String) values.get(ClassifierType.PROGRAMA.getId());
 		labelAcao = (String) values.get(ClassifierType.ACAO.getId());
-		labelLocalizador = (String) values.get(ClassifierType.LOCALIZADOR.getId());
+		labelLocalizador = (String) values.get(ClassifierType.SUBTITULO.getId());
 		
 		classifiers = new ArrayList<Classifier>();
 		
@@ -69,7 +69,7 @@ public class ProgramaTrabalhoDAO {
 		classifiers.add(new Classifier(labelUnidade, codUnidade, year, ClassifierType.UO));
 		classifiers.add(new Classifier(labelPrograma, codPrograma, year, ClassifierType.PROGRAMA));
 		classifiers.add(new Classifier(labelAcao, codAcao, year, ClassifierType.ACAO));
-		classifiers.add(new Classifier(labelLocalizador, codLocalizador, year, ClassifierType.LOCALIZADOR));
+		classifiers.add(new Classifier(labelLocalizador, codLocalizador, year, ClassifierType.SUBTITULO));
 		
 		ploa = Double.valueOf( (String)values.get(Item.ValuesType.PLOA.toString()) );
 		loa = Double.valueOf( (String)values.get(Item.ValuesType.LOA.toString()) );
@@ -93,7 +93,7 @@ public class ProgramaTrabalhoDAO {
 				"?"+ClassifierType.UO.getId()+" "+
 				"?"+ClassifierType.PROGRAMA.getId()+" "+
 				"?"+ClassifierType.ACAO.getId()+" "+
-				"?"+ClassifierType.LOCALIZADOR.getId()+" "+
+				"?"+ClassifierType.SUBTITULO.getId()+" "+
 				"(SUM(?ploa) AS ?"+Item.ValuesType.PLOA+")"+
 				"(SUM(?loa) AS ?"+Item.ValuesType.LOA+")"+
 				"(SUM(?atual) AS ?"+Item.ValuesType.LEI_MAIS_CREDITOS+")"+
@@ -102,12 +102,12 @@ public class ProgramaTrabalhoDAO {
 				"(SUM(?pago) AS ?"+Item.ValuesType.PAGO+")"+
 				"WHERE {"+
 				"[] loa:temExercicio [loa:identificador "+year+"];"+
-				"loa:"+ClassifierType.FUNCAO.getProperty()+" [loa:codigo \""+codFuncao+"\"; rdf:label ?"+ClassifierType.FUNCAO.getId()+"];"+
-				"loa:"+ClassifierType.SUBFUNCAO.getProperty()+" [loa:codigo \""+codSubfuncao+"\"; rdf:label ?"+ClassifierType.SUBFUNCAO.getId()+"];"+
-				"loa:"+ClassifierType.UO.getProperty()+" [loa:codigo \""+codUnidade+"\"; rdf:label ?"+ClassifierType.UO.getId()+"];"+
-				"loa:"+ClassifierType.PROGRAMA.getProperty()+" [loa:codigo \""+codPrograma+"\"; rdf:label ?"+ClassifierType.PROGRAMA.getId()+"];"+
-				"loa:"+ClassifierType.ACAO.getProperty()+" [loa:codigo \""+codAcao+"\"; rdf:label ?"+ClassifierType.ACAO.getId()+"];"+
-				"loa:"+ClassifierType.LOCALIZADOR.getProperty()+" [loa:codigo \""+codLocalizador+"\"; rdf:label ?"+ClassifierType.LOCALIZADOR.getId()+"];"+
+				"loa:"+ClassifierType.FUNCAO.getProperty()+" [loa:codigo \""+codFuncao+"\"; rdfs:label ?"+ClassifierType.FUNCAO.getId()+"];"+
+				"loa:"+ClassifierType.SUBFUNCAO.getProperty()+" [loa:codigo \""+codSubfuncao+"\"; rdfs:label ?"+ClassifierType.SUBFUNCAO.getId()+"];"+
+				"loa:"+ClassifierType.UO.getProperty()+" [loa:codigo \""+codUnidade+"\"; rdfs:label ?"+ClassifierType.UO.getId()+"];"+
+				"loa:"+ClassifierType.PROGRAMA.getProperty()+" [loa:codigo \""+codPrograma+"\"; rdfs:label ?"+ClassifierType.PROGRAMA.getId()+"];"+
+				"loa:"+ClassifierType.ACAO.getProperty()+" [loa:codigo \""+codAcao+"\"; rdfs:label ?"+ClassifierType.ACAO.getId()+"];"+
+				"loa:"+ClassifierType.SUBTITULO.getProperty()+" [loa:codigo \""+codLocalizador+"\"; rdfs:label ?"+ClassifierType.SUBTITULO.getId()+"];"+
 				"loa:valorProjetoLei ?ploa ;"+
 				"loa:valorDotacaoInicial ?loa ;"+
 				"loa:valorLeiMaisCredito ?atual ;"+
@@ -116,7 +116,7 @@ public class ProgramaTrabalhoDAO {
 				"loa:valorPago ?pago "+
 				"} GROUP BY ?"+ClassifierType.FUNCAO.getId()+" ?"+ClassifierType.SUBFUNCAO.getId()+
 				" ?"+ClassifierType.UO.getId()+" ?"+ClassifierType.PROGRAMA.getId()+
-				" ?"+ClassifierType.ACAO.getId()+" ?"+ClassifierType.LOCALIZADOR.getId();
+				" ?"+ClassifierType.ACAO.getId()+" ?"+ClassifierType.SUBTITULO.getId();
 
 
 		return query;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>  
 <resources>  
-    <string-array name="exercicios">  
+    <string-array name="exercicios">
+        <item>2015</item>  
         <item>2014</item>  
         <item>2013</item>  
         <item>2012</item>  
